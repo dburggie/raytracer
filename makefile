@@ -6,6 +6,10 @@ CC   = gcc ${COPT}
 SRC = src
 BLD = bld
 
-HDR = raytracer.h
+HDR = ${SRC}/raytracer.h
 OBJ = 
+
+${BLD}/Vector.o: ${SRC}/Vector.cpp ${HDR}
+	${CC} -c $< -o $@
+
 

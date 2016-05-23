@@ -1,7 +1,9 @@
 #ifndef __RAYTRACER_H
 #define __RAYTRACER_H
 
-namespace raytrace {
+#define DIV_LIMIT 0.000001
+
+namespace raytracer {
 	class Vector {
 		private:
 		public:

@@ -29,13 +29,13 @@ Vector::~Vector() {}
 
 
 
-static double Vector::dot(const Vector & v, const Vector & w) {
+double Vector::dot(const Vector & v, const Vector & w) {
 	return v.x * w.x + v.y * w.y + v.z * w.z;
 }
 
 
 
-static Vector Vector::cross(const Vector & v, const Vector & w) {
+Vector Vector::cross(const Vector & v, const Vector & w) {
 	return Vector(
 			v.y * w.z - v.z * w.y,
 			v.z * w.x - v.x * w.z,
@@ -50,11 +50,15 @@ void Vector::normalize() {
 	
 	// don't divide by what is essentially zero
 	if (l < DIV_LIMIT) {
-		x = 0.0; y = 1.0; z = 0.0;
+		x = 0.0;
+		y = 1.0;
+		z = 0.0;
 	}
 
 	else {
-		x /= l; y /= l z /= l;
+		x /= l;
+		y /= l;
+		z /= l;
 	}
 }
 
