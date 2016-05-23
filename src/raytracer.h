@@ -30,6 +30,14 @@ namespace raytracer {
 	class Ray {
 		private:
 		public:
+			Vector p, v;
+
+			Ray();
+			Ray(const Vector & point, const Vector & direction);
+			Ray(const Ray & ray);
+
+			void reflect(const Vector & point, const Vector & normal);
+			Vector follow(double distance);
 	};
 
 	class Body {
