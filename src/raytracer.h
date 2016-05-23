@@ -17,6 +17,7 @@ namespace raytracer {
 			static Vector cross(const Vector & v, const Vector & w);
 
 			void copy(const Vector & v);
+			void copy(double x, double y, double z);
 
 			void normalize();
 			void scale(double s);

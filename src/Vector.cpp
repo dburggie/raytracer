@@ -47,6 +47,12 @@ void Vector::copy(const Vector & v) {
 
 
 
+void Vector::copy(double x, double y, double z) {
+	this->x = x; this->y = y; this->z = z;
+}
+
+
+
 void Vector::normalize() {
 	double l = std::sqrt(x * x + y * y + z * z);
 	

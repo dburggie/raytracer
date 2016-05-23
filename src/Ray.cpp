@@ -5,8 +5,8 @@ using namespace raytracer;
 
 
 Ray::Ray() {
-	p.setxyz(0.0,0.0,0.0);
-	v.setxyz(0.0,1.0,0.0);
+	p.copy(0.0,0.0,0.0);
+	v.copy(0.0,1.0,0.0);
 }
 
 
