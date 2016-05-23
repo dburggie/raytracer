@@ -25,10 +25,6 @@ Vector::Vector(const Vector & v) {
 
 
 
-Vector::~Vector() {}
-
-
-
 double Vector::dot(const Vector & v, const Vector & w) {
 	return v.x * w.x + v.y * w.y + v.z * w.z;
 }
@@ -41,6 +37,12 @@ Vector Vector::cross(const Vector & v, const Vector & w) {
 			v.z * w.x - v.x * w.z,
 			v.x * w.y - v.y * w.x
 		);
+}
+
+
+
+void Vector::copy(const Vector & v) {
+	x = v.x; y = v.y; z = v.z;
 }
 
 

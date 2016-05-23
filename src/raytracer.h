@@ -12,10 +12,11 @@ namespace raytracer {
 			Vector();
 			Vector(double x, double y, double z);
 			Vector(const Vector & v);
-			~Vector();
 			
 			static double dot(const Vector & v, const Vector & w);
 			static Vector cross(const Vector & v, const Vector & w);
+
+			void copy(const Vector & v);
 
 			void normalize();
 			void scale(double s);
