@@ -122,16 +122,20 @@ void Vector::translate(const Vector & v, double s) {
 	x += s * v.x; y += s * v.y; z += s * v.z;
 }
 
+
+
 void Vector::reflect(const Vector & normal) {
-	this->translate(normal, -2.0 * this->dot(normal));
+	translate(normal, -2.0 * dot(normal));
 }
+
+
 
 //note: ratio is the ratio of the indexes of refraction across the surface
 //interface for a vector traveling in the direction of the normal.
 //Specifically, it is the incident index divided by the resultant index.
 void Vector::refract(const Vector & normal, double index_ratio) {
 
-	double s = this->dot(normal);
+	double s = dot(normal);
 	double sign = 1.0;
 
 	if (s < 0) {
@@ -139,11 +143,11 @@ void Vector::refract(const Vector & normal, double index_ratio) {
 		sign = -1.0;
 	}
 
-	this->translate(normal, -1.0 * s);
-	this->scale(index_ratio);
+	translate(normal, -1.0 * s);
+	scale(index_ratio);
 
-	s = sign * std::sqrt(1.0 - this->dot(*this));
-	this->translate(normal, s);
+	s = sign * std::sqrt(1.0 - dot(*this));
+	translate(normal, s);
 }
 
 
