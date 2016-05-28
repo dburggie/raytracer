@@ -71,6 +71,44 @@ namespace raytracer {
 	};
 
 
+
+	class BasicBody : public Body {
+		private:
+		protected:
+			bool refracting;
+			double index_ratio;
+			double size;
+			double reflectivity; // power used in specular reflection approximation.
+			Vector position, x_axis, y_axis, z_axis, color;
+		public:
+			BasicBody();
+
+			// implementing pure-virtual functions of Body
+			virtual bool isRefracting() const;
+			virtual double getRefractiveRatio(const Vector & p) const;
+			virtual Vector getColor(const Vector & p) const;
+			virtual double getReflectivity(const Vector & p) const;
+
+			// remaining pure-virtual
+			virtual Vector getNormal(const Vector & p) const = 0;
+			virtual double getDistance(const Ray & r) const = 0;
+
+			// new to BasicBody
+			virtual void setPosition(const Vector & p);
+			virtual void setOrientation(
+					const Vector & X, 
+					const Vector & Y, 
+					const Vector & Z
+				);
+			virtual void setSize(double S); // asserts S>0?
+			virtual void setColor(const Vector & c); // don't crucify me for reusing Vector for color
+			virtual void setReflectivity(double r);
+			virtual void refractionOff();
+			virtual void setRefraction(double ratio); //interior index over exterior 
+
+	};
+
+
 /*
 	class Sphere : public Body {
 		protected:
