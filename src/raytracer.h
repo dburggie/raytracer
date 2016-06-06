@@ -123,28 +123,29 @@ namespace raytracer {
 			virtual double getDistance(const Ray & r) const;
 	};
 
-/*
-	class Sphere : public Body {
+
+
+	class Plane : public BasicBody {
+		private:
 		protected:
-			double radius, R, reflectivity;
-			Vector position, color;
 		public:
-			//implement abstract elements of Body
-			virtual Vector getColor(const Vector & p);
-			virtual Vector getNormal(const Vector & p);
-			virtual Interface intersection(const Ray & r);
+			Plane(const Vector & position, const Vector & normal);
 
-			Sphere();
-			Sphere(const Vector & position, double radius);
-			Sphere(const Vector & p, double r, const Vector & color);
-			Sphere(const Sphere & s);
-
-			void setPosition(const Vector & p);
-			void setRadius(double r);
-			void setColor(const Vector & c);
-			void setReflectivity(double r);
+			virtual Vector getNormal(const Vector * p) const;
+			virtual double getDistance(const Ray * r) const;
 	};
-*/
+
+	class CheckeredPlane : public Plane {
+		private:
+		protected:
+			Vector color2;
+		public:
+			CheckeredPlane(const Vector & c1, const Vector & c2);
+
+			virtual void setColor(const Vector & c);
+			virtual void setColors(const Vector & c1, const Vector & c2);
+			virtual Vector getColor(const Vector & p) const;
+	};
 
 
 }
