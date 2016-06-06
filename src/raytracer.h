@@ -131,8 +131,8 @@ namespace raytracer {
 		public:
 			Plane(const Vector & position, const Vector & normal);
 
-			virtual Vector getNormal(const Vector * p) const;
-			virtual double getDistance(const Ray * r) const;
+			virtual Vector getNormal(const Vector & p) const;
+			virtual double getDistance(const Ray & r) const;
 	};
 
 	class CheckeredPlane : public Plane {
