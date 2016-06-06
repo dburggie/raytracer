@@ -2,6 +2,8 @@
 #define __RAYTRACER_H
 
 #define DIV_LIMIT 0.000001
+#define ZERO 0.000001
+#define ARRAY_SIZE 1000
 
 namespace raytracer {
 
@@ -9,13 +11,17 @@ namespace raytracer {
 
 	class Vector {
 		private:
+		protected:
 		public:
 			double x, y, z;
 
 			Vector();
 			Vector(double x, double y, double z);
 			Vector(const Vector & v);
-			
+	
+			static void seed();
+			static Vector random(double r); // returns a vector in Ball(r)
+
 			static double dot(const Vector & v, const Vector & w);
 			double dot() const;
 			double dot(const Vector & v) const;
@@ -76,6 +82,58 @@ namespace raytracer {
 
 
 
+	class Light {
+		private:
+		protected:
+		public:
+	};
+
+
+
+	class Sky {
+		private:
+		protected:
+		public:
+	};
+
+
+
+	class World {
+		private:
+			int body_count;
+			int light_count;
+			Sky sky;
+			Light *lights[ARRAY_SIZE];
+			Body *bodies[ARRAY_SIZE];
+		protected:
+		public:
+	};
+
+
+
+	class Camera {
+		private:
+		protected:
+			Vector position, focus, origin, right, forward, down, up;
+			double window_x, window_y, pixel_size;
+			int pixels_x, pixels_y;
+		public:
+	};
+
+
+
+	class Tracer {
+		private:
+		protected:
+		public:
+	};
+
+
+
+	/* ########## Body Classes ########## */
+
+
+
 	class BasicBody : public Body {
 		private:
 		protected:
@@ -114,6 +172,8 @@ namespace raytracer {
 
 	};
 
+
+
 	class Sphere : public BasicBody {
 		private:
 		protected:
@@ -140,6 +200,8 @@ namespace raytracer {
 			virtual double getDistance(const Ray & r) const;
 	};
 
+
+
 	class CheckeredPlane : public Plane {
 		private:
 		protected:
@@ -149,8 +211,6 @@ namespace raytracer {
 			virtual void setColors(const Vector & c1, const Vector & c2);
 			virtual Vector getColor(const Vector & p) const;
 	};
-
-
 }
 
 

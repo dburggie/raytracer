@@ -1,12 +1,14 @@
 #include <raytracer.h>
 #include <cassert>
 #include <cmath>
-
+#include <cstdlib>
+#include <ctime>
 
 
 using namespace raytracer;
 
-
+static const double PI  = 4.0 * atan(1.0);
+static const double TAU = 2.0 * PI;
 
 Vector::Vector() {
 	x = 0.0; y = 1.0; z = 0.0;
@@ -22,6 +24,27 @@ Vector::Vector(double x, double y, double z) {
 
 Vector::Vector(const Vector & v) {
 	x = v.x; y = v.y; z = v.z;
+}
+
+
+void Vector::seed() {
+	std::srand(std::time(NULL));
+}
+
+
+Vector Vector::random(double r) {
+
+	r *= std::rand();
+
+	double t = TAU * std::rand(),
+		   p = PI * std::rand(),
+		   rcosp = r * std::sin(p);
+
+	return Vector(
+			rcosp * std::cos(t),
+			rcosp * std::sin(t),
+			r * std::sin(p)
+		);
 }
 
 
