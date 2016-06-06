@@ -1,41 +1,8 @@
 #include <raytracer.h>
 #include <cassert>
+#include <cmath>
 
 using namespace raytracer;
-
-/*
-	class BasicBody : public Body {
-		private:
-		protected:
-			bool refracting;
-			double index_ratio;
-			double size;
-			double reflectivity; // power used in specular reflection approximation.
-			Vector position, x_axis, y_axis, z_axis, color;
-		public:
-			// implementing pure-virtual functions of Body
-			virtual bool isRefracting() const;
-			virtual double getRefractiveRatio(const Vector & p) const;
-			virtual Vector getColor(const Vector & p) const;
-			virtual double getReflectivity(const Vector & p) const;
-
-			// remaining pure-virtual
-			virtual Vector getNormal(const Vector & p) const = 0;
-			virtual double getDistance(const Ray & r) const = 0;
-
-			// new to BasicBody
-			virtual void setPosition(const Vector & p);
-			virtual void setOrientation(
-					const Vector & X, 
-					const Vector & Y, 
-					const Vector & Z
-				);
-			virtual void setSize(double S); // asserts S>0?
-			virtual void setColor(const Vector & c); // don't crucify me for reusing Vector for color
-			virtual void refractionOff();
-			virtual void setRefraction(double ratio); //interior index over exterior 
-	};
- */
 
 
 
@@ -70,10 +37,16 @@ Vector BasicBody::getColor(const Vector & p) const {
 
 
 
-void BasicBody::setReflectivity(double r) {
-	assert(r > 0);
+Vector BasicBody::getExteriorColor(const Vector & p) const {
+	return exterior_color;
+}
 
-	reflectivity = r;
+
+
+void BasicBody::setReflectivity(double index) {
+	assert(index > DIV_LIMIT);
+
+	reflectivity = std::pow((index - 1.0) / (index), 2.0);
 }
 
 
@@ -126,6 +99,18 @@ void BasicBody::setColor(const Vector & c) {
 
 
 
+void BasicBody::setExteriorColor(const Vector & c) {
+	assert(c.x > 0);
+	assert(c.y > 0);
+	assert(c.z > 0);
+	assert(c.x < 1);
+	assert(c.y < 1);
+	assert(c.z < 1);
+
+	exterior_color.copy(c);
+}
+
+
 void BasicBody::refractionOff() {
 	refracting = false;
 	index_ratio = 0.01;
@@ -133,9 +118,9 @@ void BasicBody::refractionOff() {
 
 
 
-void BasicBody::setRefraction(double ratio) {
-	assert(ratio >= DIV_LIMIT);
-	index_ratio = ratio;
+void BasicBody::setRefraction(double index) {
+	setReflectivity(index);
+	index_ratio = index;
 }
 
 

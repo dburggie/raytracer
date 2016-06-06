@@ -76,6 +76,14 @@ void Vector::copy(double x, double y, double z) {
 
 
 
+void Vector::power(double p) {
+	x = std::pow(x,p);
+	y = std::pow(y,p);
+	z = std::pow(z,p);
+}
+
+
+
 void Vector::normalize() {
 	double l = std::sqrt(x * x + y * y + z * z);
 	

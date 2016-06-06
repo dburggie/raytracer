@@ -26,6 +26,8 @@ namespace raytracer {
 			void copy(const Vector & v);
 			void copy(double x, double y, double z);
 
+			void power(double p);
+
 			void normalize();
 			void scale(double s);
 			void add(const Vector & v);
@@ -66,6 +68,7 @@ namespace raytracer {
 			virtual bool isRefracting() const = 0;
 			virtual double getRefractiveRatio(const Vector & p) const = 0;
 			virtual Vector getColor(const Vector & p) const = 0;
+			virtual Vector getExteriorColor(const Vector & p) const = 0;
 			virtual Vector getNormal(const Vector & p) const = 0;
 			virtual double getDistance(const Ray & r) const = 0;
 			virtual double getReflectivity(const Vector & p) const = 0;
@@ -80,7 +83,7 @@ namespace raytracer {
 			double index_ratio;
 			double size;
 			double reflectivity; // power used in specular reflection approximation.
-			Vector position, x_axis, y_axis, z_axis, color;
+			Vector position, x_axis, y_axis, z_axis, color, exterior_color;
 		public:
 			BasicBody();
 
@@ -88,6 +91,7 @@ namespace raytracer {
 			virtual bool isRefracting() const;
 			virtual double getRefractiveRatio(const Vector & p) const;
 			virtual Vector getColor(const Vector & p) const;
+			virtual Vector getExteriorColor(const Vector & p) const;
 			virtual double getReflectivity(const Vector & p) const;
 
 			// remaining pure-virtual
@@ -103,9 +107,10 @@ namespace raytracer {
 				);
 			virtual void setSize(double S); // asserts S>0?
 			virtual void setColor(const Vector & c); // don't crucify me for reusing Vector for color
-			virtual void setReflectivity(double r);
+			virtual void setExteriorColor(const Vector & c);
+			virtual void setReflectivity(double index);
 			virtual void refractionOff();
-			virtual void setRefraction(double ratio); //interior index over exterior 
+			virtual void setRefraction(double index); //interior index over exterior 
 
 	};
 
