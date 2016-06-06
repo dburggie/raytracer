@@ -17,6 +17,7 @@ namespace raytracer {
 			Vector(const Vector & v);
 			
 			static double dot(const Vector & v, const Vector & w);
+			double dot() const;
 			double dot(const Vector & v) const;
 
 			static Vector cross(const Vector & v, const Vector & w);
@@ -108,6 +109,19 @@ namespace raytracer {
 
 	};
 
+	class Sphere : public BasicBody {
+		private:
+		protected:
+			double magnitude;
+			double reciprocal;
+		public:
+			Sphere(double radius);
+
+			virtual void setSize(double radius);
+
+			virtual Vector getNormal(const Vector & p) const;
+			virtual double getDistance(const Ray & r) const;
+	};
 
 /*
 	class Sphere : public Body {
