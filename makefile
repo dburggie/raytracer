@@ -8,7 +8,7 @@ BLD = bld
 
 HDR = ${SRC}/raytracer.h
 OBJ = ${BLD}/Vector.o ${BLD}/Ray.o ${BLD}/BasicBody.o
-OBJ += ${BLD}/Sphere.o
+OBJ += ${BLD}/Sphere.o ${BLD}/Plane.o 
 
 all: ${OBJ}
 
@@ -27,5 +27,9 @@ ${BLD}/BasicBody.o: ${SRC}/BasicBody.cpp ${HDR}
 
 ${BLD}/Sphere.o: ${SRC}/Sphere.cpp ${HDR}
 	${CC} -o $@ -c $<
+
+${BLD}/Plane.o: ${SRC}/Plane.cpp ${HDR}
+	${CC} -o $@ -c $<
+
 
 
