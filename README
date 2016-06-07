@@ -1,0 +1,21 @@
+
+Raytracer is a library for rendering 3D scenes of objects. It tries to be
+faithful to the physics of light as far as reflections and refractions go,
+however, some shortcuts have to be employed occasionally to keep runtime at
+least somewhat reasonable.
+
+The idea is that you create a world containing light sources, physical bodies,
+a sky, and a camera. The camera has a defined view-pane through which it traces
+light-rays. The camera then records the color of the world in the direction of
+this ray by finding the closest object that would be hit, determining how the
+ray would reflect or refract upon that surface, and then recursively trace any
+refection or refraction rays. Rays are traced until they end up missing all
+world objects or after a predefined depth of recursion.
+
+On the approximations used:
+
+In reality, Specular reflection is dependant upon the polarization of light
+relative to the surface. We don't track polarization, thus some approximation
+is used. As for ambient illumination, in reality, a point will have a large
+ambient illumination when many bright surfaces are within it's line of sight,
+we are, however, holding ambient scene brightness constant.
