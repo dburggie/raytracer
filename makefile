@@ -42,7 +42,7 @@ ${BLD}/RNG.o: ${SRC}/RNG.cpp ${HDR}
 
 TST  = test
 TEXE = ${BLD}/test_RNG
-TOBJ = test_RNG.o
+TOBJ = ${BLD}/test_RNG.o
 
 test: ${TEXE}
 
