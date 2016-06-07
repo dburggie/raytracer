@@ -60,6 +60,10 @@ ${BLD}/test_RNG.o: ${TST}/test_RNG.cpp ${HDR}
 # ----- Clean -----
 
 clean:
+	rm -f ${OBJ}
+	rm -f ${TOBJ}
+
+clobber:
 	rm -f ${EXE}
 	rm -f ${OBJ}
 	rm -f ${TEXE}
