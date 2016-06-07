@@ -1,11 +1,33 @@
 #ifndef __RAYTRACER_H
 #define __RAYTRACER_H
 
+
+#include <random>
+
+
 #define DIV_LIMIT 0.000001
 #define ZERO 0.000001
 #define ARRAY_SIZE 1000
 
 namespace raytracer {
+
+
+
+	class RNG {
+		private:
+			static RNG * singleton;
+			static bool initialized;
+
+			std::mt19937 engine;
+			std::uniform_real_distribution<double> uniform;
+
+			RNG();
+
+		public:
+			static RNG * get();
+			static void init();
+			double next();
+	};
 
 
 
