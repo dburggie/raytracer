@@ -6,4 +6,5 @@ notes/
 *.log
 *.o
 *.swp
+*.tmp
 
