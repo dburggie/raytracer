@@ -221,9 +221,11 @@ namespace raytracer {
 			double magnitude;
 			double reciprocal;
 		public:
+			Cylinder();
 			Cylinder(const Vector & p, const Vector & v, double radius);
 
 			virtual void setSize(double radius);
+			virtual void setOrientation(const Vector & axis);
 			virtual Vector getNormal(const Vector & p) const;
 			virtual double getDistance(const Ray & r) const;
 	};
