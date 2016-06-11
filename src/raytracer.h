@@ -139,11 +139,11 @@ namespace raytracer {
 	class Window {
 		private:
 			bool initialized;
-			RNG * rng;
 			Vector center, up, down, right, left, origin;
 			double width, height, pixel_size, pixels_per_unit;
 			int x_count, y_count;
 		protected:
+			RNG * rng;
 		public:
 			Window();
 
@@ -174,7 +174,7 @@ namespace raytracer {
 			Camera(const Vector & position, const Vector & focus);
 
 			void setBlur(double b);
-			Ray getRay(int x, int y); //from position towards pixel <x,y>
+			Ray getRay(int x, int y) const; //from position towards pixel <x,y>
 	};
 
 
