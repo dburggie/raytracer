@@ -64,6 +64,9 @@ namespace raytracer {
 			void subtract(double x, double y, double z);
 			void translate(const Vector & v, double s);
 
+			void project(const Vector & v);
+			void unproject(const Vector & v);
+
 			// reflect vector over surface defined by the normal vector
 			void reflect(const Vector & normal);
 
@@ -206,6 +209,21 @@ namespace raytracer {
 
 			virtual void setSize(double radius);
 
+			virtual Vector getNormal(const Vector & p) const;
+			virtual double getDistance(const Ray & r) const;
+	};
+
+
+
+	class Cylinder : public BasicBody {
+		private:
+		protected:
+			double magnitude;
+			double reciprocal;
+		public:
+			Cylinder(const Vector & p, const Vector & v, double radius);
+
+			virtual void setSize(double radius);
 			virtual Vector getNormal(const Vector & p) const;
 			virtual double getDistance(const Ray & r) const;
 	};

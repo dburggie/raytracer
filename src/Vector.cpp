@@ -197,3 +197,19 @@ void Vector::refract(const Vector & normal, double index_ratio) {
 
 
 
+void Vector::project(const Vector & v) {
+	double l = dot(v);
+	copy(v); scale(l);
+}
+
+
+
+void Vector::unproject(const Vector & v) {
+	Vector p = v;
+	p.scale(dot(v));
+	subtract(p);
+}
+
+
+
+
