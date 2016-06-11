@@ -9,7 +9,7 @@ BLD = bld
 HDR = ${SRC}/raytracer.h
 OBJ = ${BLD}/Vector.o ${BLD}/Ray.o ${BLD}/BasicBody.o
 OBJ += ${BLD}/Sphere.o ${BLD}/Plane.o ${BLD}/CheckeredPlane.o
-OBJ += ${BLD}/RNG.o ${BLD}/Cylinder.o
+OBJ += ${BLD}/RNG.o ${BLD}/Cylinder.o ${BLD}/Window.o
 
 
 all: ${OBJ}
@@ -36,6 +36,9 @@ ${BLD}/RNG.o: ${SRC}/RNG.cpp ${HDR}
 	${CC} -o $@ -c $<
 
 ${BLD}/Cylinder.o: ${SRC}/Cylinder.cpp ${HDR}
+	${CC} -o $@ -c $<
+
+${BLD}/Window.o: ${SRC}/Window.cpp ${HDR}
 	${CC} -o $@ -c $<
 
 
