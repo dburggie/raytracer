@@ -136,13 +136,45 @@ namespace raytracer {
 
 
 
-	class Camera {
+	class Window {
 		private:
+			bool initialized;
+			RNG * rng;
+			Vector center, up, down, right, left, origin;
+			double width, height, pixel_size, pixels_per_unit;
+			int x_count, y_count;
 		protected:
-			Vector position, focus, origin, right, forward, down, up;
-			double window_x, window_y, pixel_size;
-			int pixels_x, pixels_y;
 		public:
+			Window();
+
+			void setFocus(const Vector & p);
+			void setOrientation(const Vector & right, const Vector & up);
+			void setSize(double width, double height);
+			void setResolution(int vertical_pixel_count);
+
+			void init(); //returns true if settings fail
+
+			int getWidth() const;  // in pixels
+			int getHeight() const; // in pixels
+
+			Vector getPixel(int x, int y) const; // <0,0> is top left corner
+	};
+
+
+
+	class Camera : public Window {
+		private:
+			Vector position;
+			bool hasBlur;
+			double blur;
+		protected:
+		public:
+			Camera();
+			Camera(const Vector & position);
+			Camera(const Vector & position, const Vector & focus);
+
+			void setBlur(double b);
+			Ray getRay(int x, int y); //from position towards pixel <x,y>
 	};
 
 
