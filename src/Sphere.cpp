@@ -1,18 +1,7 @@
-/*
-	class Sphere : public BasicBody {
-		private:
-		protected:
-		public:
-			Sphere();
-			Sphere(double radius);
-
-			virtual Vector getNormal(const Vector & p) const;
-			virtual Vector getDistance(const Ray & r) const;
-	};
- */
-
 
 #include <raytracer.h>
+#include <bodies.h>
+
 #include <cassert>
 #include <cmath>
 

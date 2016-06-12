@@ -123,26 +123,6 @@ namespace raytracer {
 
 
 	
-	class BasicLight : public Light {
-		private:
-			Vector direction, color, intensity;
-			bool hasPenumbra;
-			double penumbra;
-		protected:
-		public:
-			BasicLight();
-			virtual void setDirection(const Vector & p);
-			virtual void setPenumbralSize(double d);
-			virtual void setColor(const Vector & c);
-			virtual void setIntensity(const Vector & i);
-
-			virtual Vector getDirection(const Vector & p) const;
-			virtual Vector getColor() const;
-			virtual Vector getIntensity(const Vector & p) const;
-	};
-
-
-
 	class Sky {
 		private:
 		protected:
@@ -150,17 +130,6 @@ namespace raytracer {
 			virtual ~Sky();
 
 			virtual Vector getColor(const Vector & direction) const = 0;
-	};
-
-
-
-	class BasicSky : public Sky {
-		private:
-			Vector sun, color, up;
-		protected:
-		public:
-			BasicSky();
-			virtual Vector getColor(const Vector & direction) const;
 	};
 
 
@@ -256,105 +225,7 @@ namespace raytracer {
 	};
 
 
-	/* ########## Body Classes ########## */
-
-
-
-	class BasicBody : public Body {
-		private:
-		protected:
-			bool refracting;
-			double index_ratio;
-			double size;
-			double reflectivity; // power used in specular reflection approximation.
-			Vector position, x_axis, y_axis, z_axis, color, exterior_color;
-		public:
-			BasicBody();
-
-			// implementing pure-virtual functions of Body
-			virtual bool isRefracting() const;
-			virtual double getRefractiveRatio(const Vector & p) const;
-			virtual Vector getColor(const Vector & p) const;
-			virtual Vector getExteriorColor(const Vector & p) const;
-			virtual double getReflectivity(const Vector & p) const;
-
-			// remaining pure-virtual
-			virtual Vector getNormal(const Vector & p) const = 0;
-			virtual double getDistance(const Ray & r) const = 0;
-
-			// new to BasicBody
-			virtual void setPosition(const Vector & p);
-			virtual void setOrientation(
-					const Vector & X, 
-					const Vector & Y, 
-					const Vector & Z
-				);
-			virtual void setSize(double S); // asserts S>0?
-			virtual void setColor(const Vector & c); // don't crucify me for reusing Vector for color
-			virtual void setExteriorColor(const Vector & c);
-			virtual void setReflectivity(double index);
-			virtual void refractionOff();
-			virtual void setRefraction(double index); //interior index over exterior 
-
-	};
-
-
-
-	class Sphere : public BasicBody {
-		private:
-		protected:
-			double magnitude;
-			double reciprocal;
-		public:
-			Sphere(double radius);
-
-			virtual void setSize(double radius);
-
-			virtual Vector getNormal(const Vector & p) const;
-			virtual double getDistance(const Ray & r) const;
-	};
-
-
-
-	class Cylinder : public BasicBody {
-		private:
-		protected:
-			double magnitude;
-			double reciprocal;
-		public:
-			Cylinder();
-			Cylinder(const Vector & p, const Vector & v, double radius);
-
-			virtual void setSize(double radius);
-			virtual void setOrientation(const Vector & axis);
-			virtual Vector getNormal(const Vector & p) const;
-			virtual double getDistance(const Ray & r) const;
-	};
-
-
-
-	class Plane : public BasicBody {
-		private:
-		protected:
-		public:
-			Plane(const Vector & position, const Vector & normal);
-
-			virtual Vector getNormal(const Vector & p) const;
-			virtual double getDistance(const Ray & r) const;
-	};
-
-
-
-	class CheckeredPlane : public Plane {
-		private:
-		protected:
-			Vector color2;
-		public:
-			virtual void setColor(const Vector & c);
-			virtual void setColors(const Vector & c1, const Vector & c2);
-			virtual Vector getColor(const Vector & p) const;
-	};
-}
+} //end additions to namespace raytracer
 
 
 

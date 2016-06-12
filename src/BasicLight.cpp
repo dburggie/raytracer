@@ -1,4 +1,5 @@
 #include <raytracer.h>
+#include <lights.h>
 
 #include <cmath>
 #include <cassert>

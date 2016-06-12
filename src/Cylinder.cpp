@@ -1,25 +1,10 @@
 #include <raytracer.h>
+#include <bodies.h>
 
 #include <cmath>
 #include <cassert>
 
 using namespace raytracer;
-
-/*
-	class Cylinder : public BasicBody {
-		private:
-		protected:
-			double magnitude;
-			double reciprocal;
-		public:
-			Cylinder(const Vector & p, const Vector & v, double radius);
-
-			virtual void setSize(double radius);
-			virtual void setOrientation(const Vector & axis);
-			virtual Vector getNormal(const Vector & p) const;
-			virtual double getDistance(const Ray & r) const;
-	};
- */
 
 
 

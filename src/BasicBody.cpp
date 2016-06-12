@@ -1,6 +1,10 @@
 #include <raytracer.h>
+#include <bodies.h>
+
 #include <cassert>
 #include <cmath>
+
+
 
 using namespace raytracer;
 

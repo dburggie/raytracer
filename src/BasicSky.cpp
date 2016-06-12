@@ -1,5 +1,6 @@
 
 #include <raytracer.h>
+#include <skies.h>
 
 #include <cmath>
 #include <cassert>

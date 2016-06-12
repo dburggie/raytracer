@@ -1,23 +1,13 @@
 
 #include <raytracer.h>
+#include <bodies.h>
+
 #include <cassert>
 #include <cmath>
 
+
+
 using namespace raytracer;
-
-/*
-	class CheckeredPlane : public Plane {
-		private:
-		protected:
-			Vector color2;
-		public:
-			CheckeredPlane(const Vector & c1, const Vector & c2);
-
-			virtual void setColor(const Vector & c);
-			virtual void setColors(const Vector & c1, const Vector & c2);
-			virtual Vector getColor(const Vector & p) const;
-	};
- */
 
 
 
