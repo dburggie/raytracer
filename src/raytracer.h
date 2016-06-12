@@ -239,6 +239,23 @@ namespace raytracer {
 
 
 
+	class Image {
+		private:
+			int width, height;
+			Vector ***scanlines;
+		public:
+			Image();
+			Image(int w, int h);
+			Image(const Image & image);
+			~Image();
+			
+			void setDims(int width, int height);
+			void setPixel(int x, int y, const Vector & color);
+			
+			void write(const char * filename) const;
+	};
+
+
 	/* ########## Body Classes ########## */
 
 
