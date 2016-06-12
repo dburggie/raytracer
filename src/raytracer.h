@@ -125,6 +125,7 @@ namespace raytracer {
 			double penumbra;
 		protected:
 		public:
+			BasicLight();
 			virtual void setDirection(const Vector & p);
 			virtual void setPenumbralSize(double d);
 			virtual void setColor(const Vector & c);
