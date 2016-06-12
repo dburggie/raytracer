@@ -150,9 +150,9 @@ namespace raytracer {
 	class BasicSky {
 		private:
 			Vector sun, color, up;
-			double power;
 		protected:
 		public:
+			BasicSky();
 			virtual Vector getColor(const Vector & direction) const;
 	};
 

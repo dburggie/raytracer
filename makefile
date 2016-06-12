@@ -10,7 +10,7 @@ HDR = ${SRC}/raytracer.h
 OBJ = ${BLD}/Vector.o ${BLD}/Ray.o ${BLD}/BasicBody.o
 OBJ += ${BLD}/Sphere.o ${BLD}/Plane.o ${BLD}/CheckeredPlane.o
 OBJ += ${BLD}/RNG.o ${BLD}/Cylinder.o ${BLD}/Window.o
-OBJ += ${BLD}/Camera.o ${BLD}/BasicLight.o
+OBJ += ${BLD}/Camera.o ${BLD}/BasicLight.o ${BLD}/BasicSky.o
 
 
 all: ${OBJ}
@@ -48,6 +48,8 @@ ${BLD}/Camera.o: ${SRC}/Camera.cpp ${HDR}
 ${BLD}/BasicLight.o: ${SRC}/BasicLight.cpp ${HDR}
 	${CC} -o $@ -c $<
 
+${BLD}/BasicSky.o: ${SRC}/BasicSky.cpp ${HDR}
+	${CC} -o $@ -c $<
 
 
 
