@@ -11,6 +11,7 @@ OBJ = ${BLD}/Vector.o ${BLD}/Ray.o ${BLD}/BasicBody.o
 OBJ += ${BLD}/Sphere.o ${BLD}/Plane.o ${BLD}/CheckeredPlane.o
 OBJ += ${BLD}/RNG.o ${BLD}/Cylinder.o ${BLD}/Window.o
 OBJ += ${BLD}/Camera.o ${BLD}/BasicLight.o ${BLD}/BasicSky.o
+OBJ += ${BLD}/World.o
 
 
 all: ${OBJ}
@@ -51,6 +52,8 @@ ${BLD}/BasicLight.o: ${SRC}/BasicLight.cpp ${HDR}
 ${BLD}/BasicSky.o: ${SRC}/BasicSky.cpp ${HDR}
 	${CC} -o $@ -c $<
 
+${BLD}/World.o: ${SRC}/World.cpp ${HDR}
+	${CC} -o $@ -c $<
 
 
 

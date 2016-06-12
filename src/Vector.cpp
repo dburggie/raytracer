@@ -1,11 +1,11 @@
 #include <raytracer.h>
+
 #include <cassert>
 #include <cmath>
-#include <cstdlib>
-#include <ctime>
-
 
 using namespace raytracer;
+
+
 
 static const double PI  = 4.0 * atan(1.0);
 static const double TAU = 2.0 * PI;
@@ -130,6 +130,14 @@ void Vector::normalize() {
 
 void Vector::scale(double s) {
 	x *= s; y *= s; z *= s;
+}
+
+
+
+void Vector::scale(const Vector & v) {
+	x *= v.x;
+	y *= v.y;
+	z *= v.z;
 }
 
 

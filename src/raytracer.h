@@ -58,6 +58,7 @@ namespace raytracer {
 
 			void normalize();
 			void scale(double s);
+			void scale(const Vector & v);
 			void add(const Vector & v);
 			void add(double x, double y, double z);
 			void subtract(const Vector & v);
@@ -96,6 +97,8 @@ namespace raytracer {
 	class Body {
 		private:
 		public:
+			virtual ~Body();
+
 			virtual bool isRefracting() const = 0;
 			virtual double getRefractiveRatio(const Vector & p) const = 0;
 			virtual Vector getColor(const Vector & p) const = 0;
@@ -111,6 +114,8 @@ namespace raytracer {
 		private:
 		protected:
 		public:
+			virtual ~Light();
+
 			virtual Vector getDirection(const Vector & p) const = 0;
 			virtual Vector getColor() const = 0;
 			virtual Vector getIntensity(const Vector & p) const = 0;
@@ -142,12 +147,14 @@ namespace raytracer {
 		private:
 		protected:
 		public:
+			virtual ~Sky();
+
 			virtual Vector getColor(const Vector & direction) const = 0;
 	};
 
 
 
-	class BasicSky {
+	class BasicSky : public Sky {
 		private:
 			Vector sun, color, up;
 		protected:
@@ -160,6 +167,7 @@ namespace raytracer {
 
 	class World {
 		private:
+			bool is_copy;
 			int body_count;
 			int light_count;
 			Sky *sky;
@@ -175,7 +183,7 @@ namespace raytracer {
 			void addLight(Light * l);
 			void setSky(Sky * s);
 
-			Vector sample(Ray r);
+			Vector sample(Ray r, int depth = 4);
 	};
 
 
