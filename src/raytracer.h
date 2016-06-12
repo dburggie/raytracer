@@ -111,6 +111,28 @@ namespace raytracer {
 		private:
 		protected:
 		public:
+			virtual Vector getDirection(const Vector & p) const = 0;
+			virtual Vector getColor() const = 0;
+			virtual Vector getIntensity(const Vector & p) const = 0;
+	};
+
+
+	
+	class BasicLight : public Light {
+		private:
+			Vector direction, color, intensity;
+			bool hasPenumbra;
+			double penumbra;
+		protected:
+		public:
+			virtual void setDirection(const Vector & p);
+			virtual void setPenumbralSize(double d);
+			virtual void setColor(const Vector & c);
+			virtual void setIntensity(const Vector & i);
+
+			virtual Vector getDirection(const Vector & p) const;
+			virtual Vector getColor() const;
+			virtual Vector getIntensity(const Vector & p) const;
 	};
 
 
@@ -119,6 +141,18 @@ namespace raytracer {
 		private:
 		protected:
 		public:
+			virtual Vector getColor(const Vector & direction) const = 0;
+	};
+
+
+
+	class BasicSky {
+		private:
+			Vector sun, color, up;
+			double power;
+		protected:
+		public:
+			virtual Vector getColor(const Vector & direction) const;
 	};
 
 
@@ -127,11 +161,20 @@ namespace raytracer {
 		private:
 			int body_count;
 			int light_count;
-			Sky sky;
+			Sky *sky;
 			Light *lights[ARRAY_SIZE];
 			Body *bodies[ARRAY_SIZE];
 		protected:
 		public:
+			World();
+			~World();
+			World(const World & w);
+
+			void addBody(Body * b);
+			void addLight(Light * l);
+			void setSky(Sky * s);
+
+			Vector sample(Ray r);
 	};
 
 
