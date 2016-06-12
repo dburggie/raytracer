@@ -27,17 +27,14 @@ Vector::Vector(const Vector & v) {
 }
 
 
-void Vector::seed() {
-	std::srand(std::time(NULL));
-}
-
 
 Vector Vector::random(double r) {
 
-	r *= std::rand();
+	RNG *rng = RNG::get();
+	r *= rng->next();
 
-	double t = TAU * std::rand(),
-		   p = PI * std::rand(),
+	double t = TAU * rng->next(),
+		   p = PI * rng->next(),
 		   rcosp = r * std::sin(p);
 
 	return Vector(
