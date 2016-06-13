@@ -118,6 +118,10 @@ void test_cross() {
 		assert(a.dot() < 1.0);
 		assert(b.dot() < 1.0);
 		assert(DBL_CMP(a.dot(),b.dot()));
+		assert(DBL_CMP(a.dot(v),0.0));
+		assert(DBL_CMP(a.dot(w),0.0));
+		assert(DBL_CMP(b.dot(v),0.0));
+		assert(DBL_CMP(b.dot(w),0.0));
 		
 		a.add(w.cross(v));
 		assert(DBL_CMP(a.dot(),0.0));
