@@ -41,7 +41,6 @@ namespace raytracer {
 			Vector(double x, double y, double z);
 			Vector(const Vector & v);
 	
-			static void seed();
 			static Vector random(double r); // returns a vector in Ball(r)
 
 			static double dot(const Vector & v, const Vector & w);
