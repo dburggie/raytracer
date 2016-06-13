@@ -6,6 +6,8 @@
 #include <cmath>
 #include <cassert>
 
+#define DBL_CMP(X,Y) (std::abs((X) - (Y)) < 0.000001)
+
 using namespace raytracer;
 
 
@@ -25,6 +27,9 @@ static void test_reflect();
 static void test_refract();
 
 int main() {
+
+	RNG::init();
+
 	test_random();
 	test_dot();
 	test_cross();
@@ -39,6 +44,9 @@ int main() {
 	test_unproject();
 	test_reflect();
 	test_refract();
+
+	std::cout << "raytracer::Vector passed all tests\n";
+
 	return 0;
 }
 
@@ -55,13 +63,37 @@ void test_normalize() {}
 void test_power() {}
 void test_copy() {}
 void test_cross() {}
-void test_dot() {}
+
+
+
+void test_dot() {
+	for (int i = 0; i < 10000; i++) {
+		Vector v = Vector::random(1.0);
+		Vector w = Vector::random(1.0);
+
+		double vl = std::sqrt(v.dot()),
+			   wl = std::sqrt(w.dot());
+
+		assert(v.dot(w) < vl*wl);
+		assert(w.dot(v) < vl*wl);
+		assert(v.dot() < 1.0);
+		assert(w.dot() < 1.0);
+		assert(v.dot(v) < 1.0);
+		assert(w.dot(w) < 1.0);
+		assert(Vector::dot(v,v));
+		assert(Vector::dot(w,w));
+
+		assert(DBL_CMP(v.dot(w),w.dot(v)));
+		assert(DBL_CMP(v.dot(w),Vector::dot(v,w)));
+		assert(DBL_CMP(w.dot(v),Vector::dot(v,w)));
+		assert(DBL_CMP(v.dot(w),Vector::dot(w,v)));
+	}
+}
 
 
 
 void test_random() {
 
-	RNG::init();
 
 	int x = 0, y = 0, z = 0;
 
