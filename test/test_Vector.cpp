@@ -59,8 +59,29 @@ void test_translate() {}
 void test_subtract() {}
 void test_add() {}
 void test_scale() {}
-void test_normalize() {}
-void test_power() {}
+
+
+
+void test_normalize() {
+	for (int i = 0; i < 10000; i++) {
+		Vector v = Vector::random(1.0),
+			   w = v;
+		w.normalize();
+		assert(DBL_CMP(w.dot(),1.0));
+		assert(DBL_CMP(v.cross(w).dot(),0.0));
+	}
+}
+
+
+
+void test_power() {
+	for (int i = 0; i < 10000; i++) {
+		Vector v = Vector::random(1.0),
+			   w = v;
+		v.power(2.0);
+		assert(DBL_CMP(v.x+v.y+v.z, w.dot()));
+	}
+}
 
 
 
