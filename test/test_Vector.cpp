@@ -57,8 +57,38 @@ void test_unproject() {}
 void test_project() {}
 void test_translate() {}
 void test_subtract() {}
-void test_add() {}
-void test_scale() {}
+
+
+
+void test_add() {
+	for (int i = 0; i < 10000; i++) {
+		Vector u = Vector::random(1.0),
+			   v = Vector::random(1.0),
+			   w = u;
+		w.add(v);
+		assert(DBL_CMP(u.x+v.x,w.x));
+		assert(DBL_CMP(u.y+v.y,w.y));
+		assert(DBL_CMP(u.z+v.z,w.z));
+	}
+}
+
+
+
+void test_scale() {
+	RNG *rng = RNG::get();
+
+	for (int i = 0; i < 10000; i++) {
+		Vector v = Vector::random(1.0),
+			   w = v;
+
+		double s = rng->next();
+		w.scale(s);
+
+		assert(DBL_CMP(v.dot(w),s*v.dot()));
+		assert(DBL_CMP(w.dot(w),s*s*v.dot()));
+		assert(DBL_CMP(v.cross(w).dot(),0.0));
+	}
+}
 
 
 
