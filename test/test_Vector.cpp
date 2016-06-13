@@ -61,7 +61,29 @@ void test_add() {}
 void test_scale() {}
 void test_normalize() {}
 void test_power() {}
-void test_copy() {}
+
+
+
+void test_copy() {
+	for (int i = 0; i < 10000; i++) {
+		Vector v = Vector::random(1.0),
+			   w;
+		
+		w.copy(v);
+		assert(DBL_CMP(v.dot(),w.dot()));
+		assert(DBL_CMP(v.dot(w),v.dot()));
+
+		w.subtract(v);
+		assert(DBL_CMP(w.dot(),0.0));
+
+		w.copy(v.x,v.y,v.z);
+		assert(DBL_CMP(v.dot(),w.dot()));
+		assert(DBL_CMP(v.dot(w),v.dot()));
+
+		w.subtract(v);
+		assert(DBL_CMP(w.dot(),0.0));
+	}
+}
 
 
 
