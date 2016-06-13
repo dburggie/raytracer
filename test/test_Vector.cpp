@@ -62,7 +62,27 @@ void test_scale() {}
 void test_normalize() {}
 void test_power() {}
 void test_copy() {}
-void test_cross() {}
+
+
+
+void test_cross() {
+	for (int i = 0; i < 10000; i++) {
+		Vector v = Vector::random(1.0),
+			   w = Vector::random(1.0),
+			   a = v.cross(w),
+			   b = Vector::cross(v,w);
+
+		assert(a.dot() < 1.0);
+		assert(b.dot() < 1.0);
+		assert(DBL_CMP(a.dot(),b.dot()));
+		
+		a.add(w.cross(v));
+		assert(DBL_CMP(a.dot(),0.0));
+
+		b.add(Vector::cross(w,v));
+		assert(DBL_CMP(b.dot(),0.0));
+	}
+}
 
 
 
