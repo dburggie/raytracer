@@ -1,8 +1,7 @@
 
 #include <raytracer.h>
 
-#include <png.h>
-#include <cstdlib>
+#include <cstdio>
 #include <cmath>
 #include <cassert>
 
@@ -113,9 +112,64 @@ void Image::setPixel(int x, int y, const Vector & color) {
 
 
 
-void raytracer::Image::write(const char *filename) const {
-	//go fucking mad while trying to figure out png.h
-	//just look for a fucking library that makes raster drawing easy
-	//jesus christ
+#include <png.h>
+#include <cstring>
+
+
+
+static void setpixel(
+		png_bytep buf,
+		png_uint_32 stride,
+		int x, int y,
+		const raytracer::Vector & v)
+{
+	assert(buf != NULL);
+	assert(stride > 0);
+	assert(x >= 0);
+	assert(y >= 0);
+
+	assert(0.0 < v.x);
+	assert(v.x < 1.0);
+
+	assert(0.0 < v.y);
+	assert(v.y < 1.0);
+
+	assert(0.0 < v.z);
+	assert(v.z < 1.0);
+
+	int offset = (y * stride) + (x * 3);
+	buf[offset++] = 0xff & ((int)(256*v.x));
+	buf[offset++] = 0xff & ((int)(256*v.y));
+	buf[offset  ] = 0xff & ((int)(256*v.z));
 }
+
+
+
+void raytracer::Image::write(const char *filename) const {
+
+	png_image img; //allocate
+	std::memset(&img, 0, (sizeof img)); //memset to zero
+
+	img.version = PNG_IMAGE_VERSION;
+	img.opaque = NULL;
+	img.width = width;
+	img.height = height;
+	img.format = PNG_FORMAT_RGB;
+	img.flags = 0;
+	img.colormap_entries = 0;
+
+	png_bytep buf = NULL;
+	buf = (png_bytep) std::malloc(PNG_IMAGE_SIZE(img));
+
+	png_uint_32 stride = PNG_IMAGE_ROW_STRIDE(img);
+
+	for (int y = 0; y < height; y++)
+		for (int x = 0; x < width; x++)
+			setpixel(buf,stride,x,y, *scanlines[y][x]);
+
+	png_image_write_to_file(&img, filename, 0, buf, stride, NULL);
+
+}
+
+
 
