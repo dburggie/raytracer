@@ -11,6 +11,12 @@ using namespace raytracer;
 
 
 
+Body * CheckeredPlane::clone() const {
+	return (Body*) new CheckeredPlane(*this);
+}
+
+
+
 void CheckeredPlane::setColor(const Vector & c) {
 
 	assert(0.0 < c.x);

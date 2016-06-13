@@ -24,6 +24,12 @@ Cylinder::Cylinder(const Vector & p, const Vector & v, double radius) {
 
 
 
+Body * Cylinder::clone() const {
+	return (Body*) new Cylinder(*this);
+}
+
+
+
 void Cylinder::setSize(double radius) {
 	assert(radius > DIV_LIMIT);
 

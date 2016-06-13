@@ -23,6 +23,24 @@ BasicBody::BasicBody() {
 
 
 
+Body * BasicBody::clone() const {
+	return (Body*) new BasicBody(*this);
+}
+
+
+
+Vector BasicBody::getNormal(const Vector & p) const {
+	return Vector(0.0, 1.0, 0.0);
+}
+
+
+
+double BasicBody::getDistance(const Ray & r) const {
+	return -1.0; // no-hit
+}
+
+
+
 bool BasicBody::isRefracting() const {
 	return refracting;
 }

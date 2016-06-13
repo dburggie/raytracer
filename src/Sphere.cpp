@@ -15,6 +15,12 @@ Sphere::Sphere(double radius) {
 
 
 
+Body * Sphere::clone() const {
+	return (Body*) new Sphere(*this);
+}
+
+
+
 void Sphere::setSize(double radius) {
 	assert(radius > DIV_LIMIT);
 	size = radius;

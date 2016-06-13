@@ -16,6 +16,12 @@ Plane::Plane(const Vector & position, const Vector & normal) {
 
 
 
+Body* Plane::clone() const {
+	return (Body*) new Plane(*this);
+}
+
+
+
 Vector Plane::getNormal(const Vector & p) const {
 	return z_axis;
 }

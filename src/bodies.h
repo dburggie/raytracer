@@ -23,7 +23,7 @@ protected:
 public:
 	BasicBody();
 
-	virtual Body * clone();
+	virtual Body * clone() const;
 
 	// implementing pure-virtual functions of Body
 	virtual bool isRefracting() const;
@@ -33,8 +33,8 @@ public:
 	virtual double getReflectivity(const Vector & p) const;
 
 	// remaining pure-virtual
-	virtual Vector getNormal(const Vector & p) const = 0;
-	virtual double getDistance(const Ray & r) const = 0;
+	virtual Vector getNormal(const Vector & p) const;
+	virtual double getDistance(const Ray & r) const;
 
 	// new to BasicBody
 	virtual void setPosition(const Vector & p);
@@ -60,7 +60,7 @@ protected:
 public:
 	Sphere(double radius);
 
-	virtual Body * clone();
+	virtual Body * clone() const;
 
 	virtual void setSize(double radius);
 
@@ -78,7 +78,7 @@ public:
 	Cylinder();
 	Cylinder(const Vector & p, const Vector & v, double radius);
 
-	virtual Body * clone();
+	virtual Body * clone() const;
 
 	virtual void setSize(double radius);
 	virtual void setOrientation(const Vector & axis);
@@ -92,7 +92,7 @@ class Plane : public BasicBody {
 public:
 	Plane(const Vector & position, const Vector & normal);
 
-	virtual Body * clone();
+	virtual Body * clone() const;
 
 	virtual Vector getNormal(const Vector & p) const;
 	virtual double getDistance(const Ray & r) const;
@@ -105,7 +105,7 @@ protected:
 	Vector color2;
 public:
 
-	virtual Body * clone();
+	virtual Body * clone() const;
 
 	virtual void setColor(const Vector & c);
 	virtual void setColors(const Vector & c1, const Vector & c2);
