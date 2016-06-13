@@ -56,7 +56,23 @@ void test_reflect() {}
 void test_unproject() {}
 void test_project() {}
 void test_translate() {}
-void test_subtract() {}
+
+
+
+void test_subtract() {
+	for (int i = 0; i < 10000; i++){
+		Vector u = Vector::random(1.0),
+			   v = Vector::random(1.0),
+			   w = u;
+		w.subtract(v);
+		assert(DBL_CMP(u.x-v.x,w.x));
+		assert(DBL_CMP(u.y-v.y,w.y));
+		assert(DBL_CMP(u.z-v.z,w.z));
+
+		w.copy(u); w.subtract(u);
+		assert(DBL_CMP(w.dot(),0.0));
+	}
+}
 
 
 
@@ -69,6 +85,9 @@ void test_add() {
 		assert(DBL_CMP(u.x+v.x,w.x));
 		assert(DBL_CMP(u.y+v.y,w.y));
 		assert(DBL_CMP(u.z+v.z,w.z));
+
+		w.copy(u); w.add(u);
+		assert(DBL_CMP(w.dot(), 4.0*u.dot()));
 	}
 }
 
