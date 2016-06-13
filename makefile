@@ -1,30 +1,59 @@
 
-SRC = src
-INC = src
-BLD = bld
+SRC = source
+INC = include
+BLD = build
 
 CFLG = -Wall
 CINC = -I${INC}
 COPT = ${CFLG} ${CINC}
 CC   = g++ ${COPT}
 
+HDR = ${INC}/raytracer.h
 OBJ = ${BLD}/Vector.o ${BLD}/Ray.o ${BLD}/Camera.o
 OBJ += ${BLD}/RNG.o ${BLD}/Window.o
 OBJ += ${BLD}/World.o
 
-BDY = ${BLD}/BasicBody.o ${BLD}/Sphere.o ${BLD}/Plane.o
-BDY += ${BLD}/CheckeredPlane.o ${BLD}/Cylinder.o
+BSRC = ${SRC}/bodies
+BBLD = ${BLD}/bodies
+BHDR = ${INC}/bodies.h
+BOBJ = ${BBLD}/BasicBody.o ${BBLD}/Sphere.o ${BBLD}/Plane.o
+BOBJ += ${BBLD}/CheckeredPlane.o ${BBLD}/Cylinder.o
 
-SKY = ${BLD}/BasicSky.o
+SSRC = ${SRC}/skies
+SBLD = ${BLD}/skies
+SHDR = ${INC}/skies.h
+SOBJ = ${SBLD}/BasicSky.o
 
-LGT = ${BLD}/BasicLight.o
+LSRC = ${SRC}/lights
+LBLD = ${BLD}/lights
+LHDR = ${INC}/lights.h
+LOBJ = ${LBLD}/BasicLight.o
 
-HDR = ${INC}/raytracer.h
+DIRS = ${BLD} ${BBLD} ${SBLD} ${LBLD} ${TBLD}
 
 
 
 
-all: ${OBJ} ${BDY} ${SKY} ${LGT}
+
+all: ${DIRS} ${OBJ} ${BOBJ} ${SOBJ} ${LOBJ}
+
+
+
+
+
+# ----- Build Directories -----
+
+${BLD}:
+	mkdir -p $@
+
+${BBLD}:
+	mkdir -p $@
+
+${SBLD}:
+	mkdir -p $@
+
+${LBLD}:
+	mkdir -p $@
 
 
 
@@ -56,21 +85,19 @@ ${BLD}/World.o: ${SRC}/World.cpp ${HDR}
 
 # ----- Bodies -----
 
-BDYHDR = ${HDR} ${INC}/bodies.h
-
-${BLD}/BasicBody.o: ${SRC}/BasicBody.cpp ${BDYHDR}
+${BBLD}/BasicBody.o: ${BSRC}/BasicBody.cpp ${BHDR} ${HDR}
 	${CC} -o $@ -c $<
 
-${BLD}/Sphere.o: ${SRC}/Sphere.cpp ${BDYHDR}
+${BBLD}/Sphere.o: ${BSRC}/Sphere.cpp ${BHDR} ${HDR}
 	${CC} -o $@ -c $<
 
-${BLD}/Plane.o: ${SRC}/Plane.cpp ${BDYHDR}
+${BBLD}/Plane.o: ${BSRC}/Plane.cpp ${BHDR} ${HDR}
 	${CC} -o $@ -c $<
 
-${BLD}/CheckeredPlane.o: ${SRC}/CheckeredPlane.cpp ${BDYHDR}
+${BBLD}/CheckeredPlane.o: ${BSRC}/CheckeredPlane.cpp ${BHDR} ${HDR}
 	${CC} -o $@ -c $<
 
-${BLD}/Cylinder.o: ${SRC}/Cylinder.cpp ${BDYHDR}
+${BBLD}/Cylinder.o: ${BSRC}/Cylinder.cpp ${BHDR} ${HDR}
 	${CC} -o $@ -c $<
 
 
@@ -79,9 +106,7 @@ ${BLD}/Cylinder.o: ${SRC}/Cylinder.cpp ${BDYHDR}
 
 # ----- Skies -----
 
-SKYHDR = ${HDR} ${INC}/skies.h
-
-${BLD}/BasicSky.o: ${SRC}/BasicSky.cpp ${SKYHDR}
+${SBLD}/BasicSky.o: ${SSRC}/BasicSky.cpp ${SHDR} ${HDR}
 	${CC} -o $@ -c $<
 
 
@@ -90,9 +115,7 @@ ${BLD}/BasicSky.o: ${SRC}/BasicSky.cpp ${SKYHDR}
 
 # ----- Lights -----
 
-LGTHDR = ${HDR} ${INC}/lights.h
-
-${BLD}/BasicLight.o: ${SRC}/BasicLight.cpp ${LGTHDR}
+${LBLD}/BasicLight.o: ${LSRC}/BasicLight.cpp ${LHDR} ${HDR}
 	${CC} -o $@ -c $<
 
 
@@ -130,6 +153,9 @@ clean:
 clobber:
 	rm -f ${EXE}
 	rm -f ${OBJ}
+	rm -f ${BOBJ}
+	rm -f ${SOBJ}
+	rm -f ${LOBJ}
 	rm -f ${TEXE}
 	rm -f ${TOBJ}
 
