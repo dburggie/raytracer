@@ -127,17 +127,28 @@ ${LBLD}/BasicLight.o: ${LSRC}/BasicLight.cpp ${LHDR} ${HDR}
 
 # ----- Tests -----
 
-TST  = test
-TEXE = ${BLD}/test_RNG
-TOBJ = ${BLD}/test_RNG.o
+TSRC = test
+TBLD = ${BLD}/tests
+TEXE = ${TBLD}/test_RNG ${TBLD}/test_Vector
+TOBJ = ${TBLD}/test_RNG.o ${TBLD}/test_Vector.o
 
-test: ${TEXE}
+test: ${TBLD} ${TEXE}
 
-${BLD}/test_RNG: ${BLD}/test_RNG.o ${BLD}/RNG.o
+${TBLD}:
+	mkdir -p $@
+
+${TBLD}/test_RNG: ${TBLD}/test_RNG.o ${BLD}/RNG.o
 	g++ -o $@ $^
 	./$@
 
-${BLD}/test_RNG.o: ${TST}/test_RNG.cpp ${HDR}
+${TBLD}/test_RNG.o: ${TSRC}/test_RNG.cpp ${HDR}
+	${CC} -o $@ -c $<
+
+${TBLD}/test_Vector: ${TBLD}/test_Vector.o ${BLD}/Vector.o ${BLD}/RNG.o
+	${CC} -o $@ $^
+	./$@
+
+${TBLD}/test_Vector.o: ${TSRC}/test_Vector.cpp ${HDR}
 	${CC} -o $@ -c $<
 
 
