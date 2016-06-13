@@ -7,7 +7,7 @@ using namespace raytracer;
 
 
 
-static const double PI  = 4.0 * atan(1.0);
+static const double PI  = 4.0 * std::atan(1.0);
 static const double TAU = 2.0 * PI;
 
 Vector::Vector() {
@@ -35,12 +35,12 @@ Vector Vector::random(double r) {
 
 	double t = TAU * rng->next(),
 		   p = PI * rng->next(),
-		   rcosp = r * std::sin(p);
+		   rsinp = r * std::sin(p);
 
 	return Vector(
-			rcosp * std::cos(t),
-			rcosp * std::sin(t),
-			r * std::sin(p)
+			rsinp * std::cos(t),
+			rsinp * std::sin(t),
+			r * std::cos(p)
 		);
 }
 
