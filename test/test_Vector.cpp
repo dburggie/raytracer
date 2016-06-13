@@ -55,7 +55,24 @@ void test_refract() {}
 void test_reflect() {}
 void test_unproject() {}
 void test_project() {}
-void test_translate() {}
+
+
+
+void test_translate() {
+	RNG *rng = RNG::get();
+	for (int i = 0; i < 10000; i++) {
+		Vector a = Vector::random(1.0),
+			   b = Vector::random(1.0),
+			   c = a, d = b;
+		double s = rng->next();
+		c.translate(b,s);
+		d.scale(s);
+		d.add(a);
+
+		assert(DBL_CMP(c.dot(),d.dot()));
+		assert(DBL_CMP(c.cross(d).dot(),0.0));
+	}
+}
 
 
 
