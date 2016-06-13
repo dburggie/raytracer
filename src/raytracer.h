@@ -99,6 +99,8 @@ namespace raytracer {
 		public:
 			virtual ~Body();
 
+			virtual Body * clone() = 0;
+
 			virtual bool isRefracting() const = 0;
 			virtual double getRefractiveRatio(const Vector & p) const = 0;
 			virtual Vector getColor(const Vector & p) const = 0;

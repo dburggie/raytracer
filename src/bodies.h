@@ -23,6 +23,8 @@ protected:
 public:
 	BasicBody();
 
+	virtual Body * clone();
+
 	// implementing pure-virtual functions of Body
 	virtual bool isRefracting() const;
 	virtual double getRefractiveRatio(const Vector & p) const;
@@ -58,6 +60,8 @@ protected:
 public:
 	Sphere(double radius);
 
+	virtual Body * clone();
+
 	virtual void setSize(double radius);
 
 	virtual Vector getNormal(const Vector & p) const;
@@ -74,6 +78,8 @@ public:
 	Cylinder();
 	Cylinder(const Vector & p, const Vector & v, double radius);
 
+	virtual Body * clone();
+
 	virtual void setSize(double radius);
 	virtual void setOrientation(const Vector & axis);
 	virtual Vector getNormal(const Vector & p) const;
@@ -86,6 +92,8 @@ class Plane : public BasicBody {
 public:
 	Plane(const Vector & position, const Vector & normal);
 
+	virtual Body * clone();
+
 	virtual Vector getNormal(const Vector & p) const;
 	virtual double getDistance(const Ray & r) const;
 }; //end Plane declaration
@@ -96,6 +104,9 @@ class CheckeredPlane : public Plane {
 protected:
 	Vector color2;
 public:
+
+	virtual Body * clone();
+
 	virtual void setColor(const Vector & c);
 	virtual void setColors(const Vector & c1, const Vector & c2);
 	virtual Vector getColor(const Vector & p) const;
