@@ -1,20 +1,36 @@
+
+SRC = src
+INC = src
+BLD = bld
+
 CFLG = -Wall
-CINC = -Isrc
+CINC = -I${INC}
 COPT = ${CFLG} ${CINC}
 CC   = g++ ${COPT}
 
-SRC = src
-BLD = bld
-
-HDR = ${SRC}/raytracer.h
-OBJ = ${BLD}/Vector.o ${BLD}/Ray.o ${BLD}/BasicBody.o
-OBJ += ${BLD}/Sphere.o ${BLD}/Plane.o ${BLD}/CheckeredPlane.o
-OBJ += ${BLD}/RNG.o ${BLD}/Cylinder.o ${BLD}/Window.o
-OBJ += ${BLD}/Camera.o ${BLD}/BasicLight.o ${BLD}/BasicSky.o
+OBJ = ${BLD}/Vector.o ${BLD}/Ray.o ${BLD}/Camera.o
+OBJ += ${BLD}/RNG.o ${BLD}/Window.o
 OBJ += ${BLD}/World.o
 
+BDY = ${BLD}/BasicBody.o ${BLD}/Sphere.o ${BLD}/Plane.o
+BDY += ${BLD}/CheckeredPlane.o ${BLD}/Cylinder.o
 
-all: ${OBJ}
+SKY = ${BLD}/BasicSky.o
+
+LGT = ${BLD}/BasicLight.o
+
+HDR = ${INC}/raytracer.h
+
+
+
+
+all: ${OBJ} ${BDY} ${SKY} ${LGT}
+
+
+
+
+
+# ----- Objects -----
 
 ${BLD}/Vector.o: ${SRC}/Vector.cpp ${HDR}
 	${CC} -o $@ -c $<
@@ -22,22 +38,7 @@ ${BLD}/Vector.o: ${SRC}/Vector.cpp ${HDR}
 ${BLD}/Ray.o: ${SRC}/Ray.cpp ${HDR}
 	${CC} -o $@ -c $<
 
-${BLD}/BasicBody.o: ${SRC}/BasicBody.cpp ${HDR}
-	${CC} -o $@ -c $<
-
-${BLD}/Sphere.o: ${SRC}/Sphere.cpp ${HDR}
-	${CC} -o $@ -c $<
-
-${BLD}/Plane.o: ${SRC}/Plane.cpp ${HDR}
-	${CC} -o $@ -c $<
-
-${BLD}/CheckeredPlane.o: ${SRC}/CheckeredPlane.cpp ${HDR}
-	${CC} -o $@ -c $<
-
 ${BLD}/RNG.o: ${SRC}/RNG.cpp ${HDR}
-	${CC} -o $@ -c $<
-
-${BLD}/Cylinder.o: ${SRC}/Cylinder.cpp ${HDR}
 	${CC} -o $@ -c $<
 
 ${BLD}/Window.o: ${SRC}/Window.cpp ${HDR}
@@ -46,14 +47,54 @@ ${BLD}/Window.o: ${SRC}/Window.cpp ${HDR}
 ${BLD}/Camera.o: ${SRC}/Camera.cpp ${HDR}
 	${CC} -o $@ -c $<
 
-${BLD}/BasicLight.o: ${SRC}/BasicLight.cpp ${HDR}
-	${CC} -o $@ -c $<
-
-${BLD}/BasicSky.o: ${SRC}/BasicSky.cpp ${HDR}
-	${CC} -o $@ -c $<
-
 ${BLD}/World.o: ${SRC}/World.cpp ${HDR}
 	${CC} -o $@ -c $<
+
+
+
+
+
+# ----- Bodies -----
+
+BDYHDR = ${HDR} ${INC}/bodies.h
+
+${BLD}/BasicBody.o: ${SRC}/BasicBody.cpp ${BDYHDR}
+	${CC} -o $@ -c $<
+
+${BLD}/Sphere.o: ${SRC}/Sphere.cpp ${BDYHDR}
+	${CC} -o $@ -c $<
+
+${BLD}/Plane.o: ${SRC}/Plane.cpp ${BDYHDR}
+	${CC} -o $@ -c $<
+
+${BLD}/CheckeredPlane.o: ${SRC}/CheckeredPlane.cpp ${BDYHDR}
+	${CC} -o $@ -c $<
+
+${BLD}/Cylinder.o: ${SRC}/Cylinder.cpp ${BDYHDR}
+	${CC} -o $@ -c $<
+
+
+
+
+
+# ----- Skies -----
+
+SKYHDR = ${HDR} ${INC}/skies.h
+
+${BLD}/BasicSky.o: ${SRC}/BasicSky.cpp ${SKYHDR}
+	${CC} -o $@ -c $<
+
+
+
+
+
+# ----- Lights -----
+
+LGTHDR = ${HDR} ${INC}/lights.h
+
+${BLD}/BasicLight.o: ${SRC}/BasicLight.cpp ${LGTHDR}
+	${CC} -o $@ -c $<
+
 
 
 
@@ -81,6 +122,9 @@ ${BLD}/test_RNG.o: ${TST}/test_RNG.cpp ${HDR}
 
 clean:
 	rm -f ${OBJ}
+	rm -f ${BDY}
+	rm -f ${SKY}
+	rm -f ${LGT}
 	rm -f ${TOBJ}
 
 clobber:
