@@ -129,8 +129,9 @@ ${LBLD}/BasicLight.o: ${LSRC}/BasicLight.cpp ${LHDR} ${HDR}
 
 TSRC = test
 TBLD = ${BLD}/tests
-TEXE = ${TBLD}/test_RNG ${TBLD}/test_Vector
+TEXE = ${TBLD}/test_RNG ${TBLD}/test_Vector ${TBLD}/test_Ray
 TOBJ = ${TBLD}/test_RNG.o ${TBLD}/test_Vector.o
+TOBJ += ${TBLD}/test_Ray.o
 
 test: ${TBLD} ${TEXE}
 
@@ -149,6 +150,13 @@ ${TBLD}/test_Vector: ${TBLD}/test_Vector.o ${BLD}/Vector.o ${BLD}/RNG.o
 	./$@
 
 ${TBLD}/test_Vector.o: ${TSRC}/test_Vector.cpp ${HDR}
+	${CC} -o $@ -c $<
+
+${TBLD}/test_Ray: ${TBLD}/test_Ray.o ${BLD}/Vector.o ${BLD}/Ray.o ${BLD}/RNG.o
+	${CC} -o $@ $^
+	./$@
+
+${TBLD}/test_Ray.o: ${TSRC}/test_Ray.cpp ${HDR}
 	${CC} -o $@ -c $<
 
 
