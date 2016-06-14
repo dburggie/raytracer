@@ -53,7 +53,30 @@ int main() {
 }
 
 
-void test_refract() {}
+
+void test_refract() {
+	RNG *rng = RNG::get();
+	for (int i = 0; i < 10000; i++) {
+		double index = 1.0 + rng->next();
+		Vector n = Vector::randunit();
+		Vector v = Vector::randunit();
+		Vector r = v; r.refract(n,index);
+
+		assert(r.dot(v) < 1.0); //r changed
+		assert(DBL_CMP(r.dot(),1.0)); //still length 1.0
+
+		//if we're shallower than critical angle
+		if (index * std::sqrt(v.cross(n).dot()) > 1.0) {
+			//check for reflection
+			assert(r.dot(n) < 0.0);
+		}
+
+		else {
+			//otherwise, make sure we're going the same direction
+			assert(v.dot(n) * r.dot(n) > 0.0);
+		}
+	}
+}
 
 
 

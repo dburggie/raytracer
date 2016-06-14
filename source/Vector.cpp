@@ -199,18 +199,26 @@ void Vector::reflect(const Vector & normal) {
 //interface for a vector traveling in the direction of the normal.
 //Specifically, it is the incident index divided by the resultant index.
 void Vector::refract(const Vector & normal, double index_ratio) {
-
-	assert(std::abs(dot() - 1.0) < DIV_LIMIT); // should be a direction vector
+	//should be working with unit vectors
+	assert(std::abs(dot() - 1.0) < DIV_LIMIT);
+	assert(std::abs(normal.dot() - 1.0) < DIV_LIMIT);
 
 	double s = dot(normal);
 	double sign = 1.0;
 
+	//check for internal refraction
+	if (s > 0.0 && index_ratio * std::sqrt(cross(normal).dot()) > 1.0) {
+		reflect(normal);
+		return;
+	}
+
+	//flip ratio if we're heading into surface instead of out
 	if (s < 0) {
 		index_ratio = 1.0 / index_ratio;
 		sign = -1.0;
 	}
 
-	translate(normal, -1.0 * s);
+	unproject(normal);
 	scale(index_ratio);
 
 	s = sign * std::sqrt(1.0 - dot());
