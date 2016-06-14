@@ -52,9 +52,38 @@ int main() {
 
 
 void test_refract() {}
-void test_reflect() {}
-void test_unproject() {}
-void test_project() {}
+
+
+
+void test_reflect() {
+	
+}
+
+
+
+void test_unproject() {
+	for (int i = 0; i < 10000; i++) {
+		Vector v = Vector::random(1.0),
+			   w = Vector::random(1.0),
+			   u = v;
+		u.unproject(w);
+		assert(u.dot() < v.dot());
+		assert(DBL_CMP(u.dot(w),0.0));
+	}
+}
+
+
+
+void test_project() {
+	for (int i = 0; i < 10000; i++) {
+		Vector v = Vector::random(1.0),
+			   w = Vector::random(1.0),
+			   p = v;
+		p.project(w);
+		assert(p.dot() < v.dot());
+		assert(DBL_CMP(p.cross(w).dot(),0.0));
+	}
+}
 
 
 
