@@ -42,6 +42,7 @@ namespace raytracer {
 			Vector(const Vector & v);
 	
 			static Vector random(double r); // returns a vector in Ball(r)
+			static Vector randunit(); // return random vector of length 1
 
 			static double dot(const Vector & v, const Vector & w);
 			double dot() const;

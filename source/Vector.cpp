@@ -46,6 +46,23 @@ Vector Vector::random(double r) {
 
 
 
+Vector Vector::randunit() {
+	
+	RNG *rng = RNG::get();
+
+	double t = TAU * rng->next(),
+		   p = PI * rng->next(),
+		   sinp = std::sin(p);
+
+	return Vector(
+			sinp * std::cos(t),
+			sinp * std::sin(t),
+			std::cos(p)
+		);
+}
+
+
+
 double Vector::dot(const Vector & v, const Vector & w) {
 	return v.x * w.x + v.y * w.y + v.z * w.z;
 }
