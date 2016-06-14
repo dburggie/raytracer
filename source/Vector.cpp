@@ -220,6 +220,7 @@ void Vector::refract(const Vector & normal, double index_ratio) {
 
 
 void Vector::project(const Vector & v) {
+	assert(std::abs(v.dot() - 1.0) < DIV_LIMIT);
 	double l = dot(v);
 	copy(v); scale(l);
 }
@@ -227,6 +228,7 @@ void Vector::project(const Vector & v) {
 
 
 void Vector::unproject(const Vector & v) {
+	assert(std::abs(v.dot() - 1.0) < DIV_LIMIT);
 	Vector p = v;
 	p.scale(dot(v));
 	subtract(p);

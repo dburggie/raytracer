@@ -64,7 +64,7 @@ void test_reflect() {
 void test_unproject() {
 	for (int i = 0; i < 10000; i++) {
 		Vector v = Vector::random(1.0),
-			   w = Vector::random(1.0),
+			   w = Vector::randunit(),
 			   u = v;
 		u.unproject(w);
 		assert(u.dot() < v.dot());
@@ -77,7 +77,7 @@ void test_unproject() {
 void test_project() {
 	for (int i = 0; i < 10000; i++) {
 		Vector v = Vector::random(1.0),
-			   w = Vector::random(1.0),
+			   w = Vector::randunit(),
 			   p = v;
 		p.project(w);
 		assert(p.dot() < v.dot());
