@@ -12,6 +12,7 @@ using namespace raytracer;
 
 
 static void test_random();
+static void test_randunit();
 static void test_dot();
 static void test_cross();
 static void test_copy();
@@ -31,6 +32,7 @@ int main() {
 	RNG::init();
 
 	test_random();
+	test_randunit();
 	test_dot();
 	test_cross();
 	test_copy();
@@ -56,7 +58,30 @@ void test_refract() {}
 
 
 void test_reflect() {
-	
+	for (int i = 0; i < 10000; i++) {
+		Vector n = Vector::randunit(),
+			   v = Vector::randunit(),
+			   r = v,
+			   pv, pr, s;
+
+		r.reflect(n);
+		pv = v; pv.project(n);
+		pr = r; pr.project(n);
+		s = r; s.add(v);
+
+		//make sure r has same length as v
+		assert(DBL_CMP(r.dot(), v.dot()));
+
+		//make sure r is on opposite side of n
+		assert(DBL_CMP(pv.dot(), pr.dot()));
+
+		//make sure v and r sum to a vector perpendicular to n
+		assert(DBL_CMP(s.dot(n), 0.0));
+
+		// make sure pr == -pv
+		pv.add(pr);
+		assert(DBL_CMP(pv.dot(), 0.0));
+	}
 }
 
 
@@ -271,6 +296,33 @@ void test_random() {
 		else
 			y++;
 		if (v.z < 0.0)
+			z--;
+		else
+			z++;
+	}
+
+	assert(std::abs(x) < 1000);
+	assert(std::abs(y) < 1000);
+	assert(std::abs(z) < 1000);
+}
+
+
+
+void test_randunit() {
+	int x = 0, y = 0, z = 0;
+
+	for (int i = 0; i < 10000; i++) {
+		Vector n = Vector::randunit();
+		assert(DBL_CMP(n.dot(),1.0));
+		if (n.x < 0.0)
+			x--;
+		else
+			x++;
+		if (n.y < 0.0)
+			y--;
+		else
+			y++;
+		if (n.z < 0.0)
 			z--;
 		else
 			z++;
