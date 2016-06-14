@@ -87,6 +87,7 @@ void World::setSky(Sky * s) {
 
 
 Vector World::sample(Ray r, int depth) {
+
 	assert(depth >= 0);
 
 	//find closest body
@@ -130,9 +131,9 @@ Vector World::sample(Ray r, int depth) {
 		Ray refract_ray = Ray(p, r.v);
 		refract_ray.v.refract(normal,ratio);
 
+		//get color along refraction ray
 		t_color = sample(refract_ray, depth-1);
 
-		t_color.scale(body->getColor(p));
 		t_color.scale(t_power);
 	}
 
@@ -150,6 +151,13 @@ Vector World::sample(Ray r, int depth) {
 	s_color.scale(s_power);
 	
 	t_color.add(s_color);
+
+	//absorb some light if we're inside this object
+	if (r.v.dot(normal) > DIV_LIMIT) {
+		Vector absorb = body->getColor(p);
+		absorb.power(min);
+		t_color.scale(absorb);
+	}
 
 	return t_color;
 }
