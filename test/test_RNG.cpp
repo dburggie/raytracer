@@ -1,5 +1,9 @@
 #include <raytracer.h>
+
 #include <iostream>
+
+#include <cmath>
+#include <cassert>
 
 using namespace raytracer;
 
@@ -8,9 +12,6 @@ int main() {
 	RNG::init();
 	RNG & rng = * RNG::get();
 	
-	for (int i = 0; i < 10; i++)
-		std::cout << rng.next() << '\n';
-
 	int counts[10] = { 0 };
 	
 	for (int i = 0; i < 100000; i++) {
@@ -18,7 +19,9 @@ int main() {
 	}
 
 	for (int i = 0; i < 10; i++)
-		std::cout << i << ": " << counts[i] << '\n';
+		assert(std::abs(counts[i] - 10000) < 1000);
+
+	std::cout << "raytracer::RNG passed all tests\n";
 
 	return 0;
 }
