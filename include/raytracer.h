@@ -118,6 +118,8 @@ namespace raytracer {
 		public:
 			virtual ~Light();
 
+			virtual Light * clone();
+
 			virtual Vector getDirection(const Vector & p) const = 0;
 			virtual Vector getColor() const = 0;
 			virtual Vector getIntensity(const Vector & p) const = 0;
@@ -131,6 +133,8 @@ namespace raytracer {
 		public:
 			virtual ~Sky();
 
+			virtual Sky * clone();
+
 			virtual Vector getColor(const Vector & direction) const = 0;
 	};
 
@@ -138,7 +142,6 @@ namespace raytracer {
 
 	class World {
 		private:
-			bool is_copy;
 			int body_count;
 			int light_count;
 			Sky *sky;
@@ -204,6 +207,10 @@ namespace raytracer {
 
 	class Tracer {
 		private:
+			Camera camera;
+			World world;
+			bool initialized;
+			bool rendered;
 		protected:
 		public:
 	};

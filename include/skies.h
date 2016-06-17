@@ -15,6 +15,9 @@ private:
 	Vector sun, color, up;
 public:
 	BasicSky();
+
+	virtual Sky * clone();
+
 	virtual Vector getColor(const Vector & direction) const;
 }; //end of BasicSky declaration
 

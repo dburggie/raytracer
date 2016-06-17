@@ -17,6 +17,12 @@ BasicSky::BasicSky() {
 
 
 
+Sky * BasicSky::clone() {
+	return (Sky*) new BasicSky(*this);
+}
+
+
+
 Vector BasicSky::getColor(const Vector & direction) const {
 	if (direction.dot(sun) > 0.99) {
 		return Vector(.99,.99,.99);

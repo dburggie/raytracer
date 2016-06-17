@@ -10,7 +10,6 @@ using namespace raytracer;
 
 
 World::World() {
-	is_copy = false;
 	body_count = 0;
 	light_count = 0;
 	sky = new BasicSky();
@@ -23,16 +22,14 @@ World::World() {
 
 
 World::World(const World & w) {
-	is_copy = true;
-
 	body_count = w.body_count;
 	light_count = w.light_count;
-	sky = w.sky;
+	sky = w.sky->clone();
 
 	for (int i = 0; i < ARRAY_SIZE; i++) {
-		if (i < body_count) bodies[i] = w.bodies[i];
+		if (i < body_count) bodies[i] = w.bodies[i]->clone();
 		else bodies[i] = NULL;
-		if (i < light_count) lights[i] = w.lights[i];
+		if (i < light_count) lights[i] = w.lights[i]->clone();
 		else lights[i] = NULL;
 	}
 }
@@ -41,19 +38,15 @@ World::World(const World & w) {
 
 World::~World() {
 
-	if (!is_copy) {
+	delete sky;
 
-		delete sky;
-
-		for (int i = 0; i < body_count; i++) {
-			delete bodies[i];
-		}
-
-		for (int i = 0; i < light_count; i++) {
-			delete lights[i];
-		}
+	for (int i = 0; i < body_count; i++) {
+		delete bodies[i];
 	}
 
+	for (int i = 0; i < light_count; i++) {
+		delete lights[i];
+	}
 }
 
 

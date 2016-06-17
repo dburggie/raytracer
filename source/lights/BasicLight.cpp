@@ -19,6 +19,12 @@ BasicLight::BasicLight() {
 
 
 
+Light * BasicLight::clone() {
+	return (Light*) new BasicLight(*this);
+}
+
+
+
 void BasicLight::setDirection(const Vector & p) {
 	assert(p.dot() > DIV_LIMIT);
 

@@ -17,6 +17,9 @@ private:
 	double penumbra;
 public:
 	BasicLight();
+	
+	virtual Light * clone();
+
 	virtual void setDirection(const Vector & p);
 	virtual void setPenumbralSize(double d);
 	virtual void setColor(const Vector & c);
