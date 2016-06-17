@@ -11,7 +11,7 @@ CC   = g++ ${COPT}
 HDR = ${INC}/raytracer.h
 OBJ = ${BLD}/Vector.o ${BLD}/Ray.o ${BLD}/Camera.o
 OBJ += ${BLD}/RNG.o ${BLD}/Window.o ${BLD}/Image.o
-OBJ += ${BLD}/World.o
+OBJ += ${BLD}/World.o ${BLD}/Tracer.o
 
 BSRC = ${SRC}/bodies
 BBLD = ${BLD}/bodies
@@ -80,6 +80,9 @@ ${BLD}/World.o: ${SRC}/World.cpp ${HDR}
 	${CC} -o $@ -c $<
 
 ${BLD}/Image.o: ${SRC}/Image.cpp ${HDR}
+	${CC} -o $@ -c $<
+
+${BLD}/Tracer.o: ${SRC}/Tracer.cpp ${HDR}
 	${CC} -o $@ -c $<
 
 

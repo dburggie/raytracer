@@ -205,18 +205,6 @@ namespace raytracer {
 
 
 
-	class Tracer {
-		private:
-			Camera camera;
-			World world;
-			bool initialized;
-			bool rendered;
-		protected:
-		public:
-	};
-
-
-
 	class Image {
 		private:
 			int width, height;
@@ -231,6 +219,28 @@ namespace raytracer {
 			void setPixel(int x, int y, const Vector & color);
 			
 			void write(const char * filename) const;
+	};
+
+
+
+	class Tracer {
+		private:
+			const char * filename;
+			Camera * camera;
+			World * world;
+			Image * image;
+		protected:
+		public:
+			Tracer();
+			Tracer(const Tracer & t);
+			~Tracer();
+
+			World * getWorld();
+			Camera * getCamera();
+			Image * getImage();
+
+			void render(int anti_alias = 32);
+			void setOutputName(const char * filename);
 	};
 
 
