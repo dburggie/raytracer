@@ -111,12 +111,15 @@ Vector World::sample(Ray r, int depth) {
 
 	//we hit something, get color here and do recursion
 	//find point of contact
-	double s_power = body->getReflectivity(p),
-		   t_power = 1 - s_power;
-
 	Vector t_color = Vector(0.0,0.0,0.0),
 		   s_color = Vector(0.0,0.0,0.0),
 		   normal  = body->getNormal(p);
+
+	double s_power, t_power, cosine = r.v.dot(normal);
+
+	s_power = body->getReflectivity(p);
+	s_power = s_power + (1 - s_power) * std::pow(1 - std::abs(cosine), 5.0);
+	t_power = 1.0 - s_power;
 
 	//get transmissive color
 	if (body->isRefracting()) {
@@ -132,7 +135,7 @@ Vector World::sample(Ray r, int depth) {
 	}
 
 	else {
-		t_color = body->getExteriorColor(p);
+		t_color.add(body->getExteriorColor(p));
 		t_color.scale(t_power);
 
 		//put shadow calculation here
@@ -147,7 +150,7 @@ Vector World::sample(Ray r, int depth) {
 	t_color.add(s_color);
 
 	//absorb some light if we're inside this object
-	if (r.v.dot(normal) > DIV_LIMIT) {
+	if (cosine > DIV_LIMIT) {
 		Vector absorb = body->getColor(p);
 		absorb.power(min);
 		t_color.scale(absorb);

@@ -13,12 +13,14 @@ using namespace raytracer;
 BasicBody::BasicBody() {
 	refracting = false;
 	index_ratio = 0.01;
+	reflectivity = 0.0;
 	size = 1.0;
 	position.copy(0.0,0.0,0.0);
 	x_axis.copy(1.0,0.0,0.0);
 	y_axis.copy(0.0,1.0,0.0);
 	z_axis.copy(0.0,0.0,1.0);
 	color.copy(0.50,0.50,0.50);
+	exterior_color.copy(color);
 }
 
 
@@ -68,7 +70,10 @@ Vector BasicBody::getExteriorColor(const Vector & p) const {
 void BasicBody::setReflectivity(double index) {
 	assert(index > DIV_LIMIT);
 
-	reflectivity = std::pow((index - 1.0) / (index), 2.0);
+	reflectivity = (index - 1.0) / (index);
+	reflectivity = reflectivity * reflectivity;
+	reflectivity = std::min(1.0,reflectivity);
+	reflectivity = std::max(0.0,reflectivity);
 }
 
 
@@ -117,6 +122,7 @@ void BasicBody::setColor(const Vector & c) {
 	assert(c.z < 1);
 
 	color.copy(c);
+	exterior_color.copy(c);
 }
 
 

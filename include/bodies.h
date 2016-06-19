@@ -113,6 +113,7 @@ public:
 	virtual void setColor(const Vector & c);
 	virtual void setColors(const Vector & c1, const Vector & c2);
 	virtual Vector getColor(const Vector & p) const;
+	virtual Vector getExteriorColor(const Vector & p) const;
 }; //end CheckeredPlane declaration
 
 

@@ -71,7 +71,37 @@ void CheckeredPlane::setColors(const Vector & c1, const Vector & c2) {
 
 Vector CheckeredPlane::getColor(const Vector & p) const {
 
-	if ( ((int) (std::floor(p.dot(x_axis)) + std::floor(p.dot(z_axis)))) % 2) {
+	Vector tmp = p;
+	tmp.subtract(position);
+
+	int x = (int) std::floor(tmp.dot(x_axis)),
+		y = (int) std::floor(tmp.dot(y_axis));
+
+	if ( (x+y) % 2 == 0) {
+		return color;
+	}
+
+	else {
+		return color2;
+	}
+}
+
+Vector CheckeredPlane::getExteriorColor(const Vector & p) const {
+	double d;
+	int x,y;
+
+	Vector tmp = p;
+	tmp.subtract(position);
+
+	d = tmp.dot(x_axis);
+	if (d < 0.0) d -= 1;
+	x = (int) d;
+
+	d = tmp.dot(z_axis);
+	if (d < 0.0) d -= 1;
+	y = (int) d;
+
+	if ( (x+y) % 2 == 0) {
 		return color;
 	}
 
