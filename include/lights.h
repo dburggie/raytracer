@@ -18,7 +18,7 @@ private:
 public:
 	BasicLight();
 	
-	virtual Light * clone();
+	virtual Light * clone() const;
 
 	virtual void setDirection(const Vector & p);
 	virtual void setPenumbralSize(double d);

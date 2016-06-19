@@ -11,6 +11,20 @@ using namespace raytracer;
 
 
 
+CheckeredPlane::CheckeredPlane() {
+	setPosition(Vector(0.0,0.0,0.0));
+	setOrientation(
+			Vector(1.0,0.0,0.0),
+			Vector(0.0,1.0,0.0),
+			Vector(0.0,0.0,1.0)
+		);
+	setColors(
+			Vector(0.9,0.9,0.9),
+			Vector(0.1,0.1,0.1)
+		);
+}
+
+
 Body * CheckeredPlane::clone() const {
 	return (Body*) new CheckeredPlane(*this);
 }
@@ -57,9 +71,9 @@ void CheckeredPlane::setColors(const Vector & c1, const Vector & c2) {
 
 Vector CheckeredPlane::getColor(const Vector & p) const {
 
-	assert(p.dot(z_axis) < 0.01);
+	assert(p.dot(y_axis) < 0.01);
 
-	if ( ((int) (std::floor(p.dot(x_axis)) + std::floor(p.dot(y_axis)))) % 2) {
+	if ( ((int) (std::floor(p.dot(x_axis)) + std::floor(p.dot(z_axis)))) % 2) {
 		return color;
 	}
 

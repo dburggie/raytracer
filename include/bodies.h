@@ -90,6 +90,7 @@ public:
 
 class Plane : public BasicBody {
 public:
+	Plane();
 	Plane(const Vector & position, const Vector & normal);
 
 	virtual Body * clone() const;
@@ -104,6 +105,8 @@ class CheckeredPlane : public Plane {
 protected:
 	Vector color2;
 public:
+	CheckeredPlane();
+	CheckeredPlane(const Vector & p, const Vector & n);
 
 	virtual Body * clone() const;
 

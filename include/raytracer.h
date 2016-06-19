@@ -97,7 +97,8 @@ namespace raytracer {
 	class Body {
 		private:
 		public:
-			virtual ~Body();
+			Body() { }
+			virtual ~Body() { }
 
 			virtual Body * clone() const = 0;
 
@@ -116,9 +117,10 @@ namespace raytracer {
 		private:
 		protected:
 		public:
-			virtual ~Light();
+			Light() { }
+			virtual ~Light() { }
 
-			virtual Light * clone();
+			virtual Light * clone() const = 0;
 
 			virtual Vector getDirection(const Vector & p) const = 0;
 			virtual Vector getColor() const = 0;
@@ -131,9 +133,10 @@ namespace raytracer {
 		private:
 		protected:
 		public:
-			virtual ~Sky();
+			Sky() { }
+			virtual ~Sky() { }
 
-			virtual Sky * clone();
+			virtual Sky * clone() const = 0;
 
 			virtual Vector getColor(const Vector & direction) const = 0;
 	};
@@ -199,6 +202,7 @@ namespace raytracer {
 			Camera(const Vector & position);
 			Camera(const Vector & position, const Vector & focus);
 
+			void setPosition(const Vector & p);
 			void setBlur(double b);
 			Ray getRay(int x, int y) const; //from position towards pixel <x,y>
 	};
@@ -228,7 +232,6 @@ namespace raytracer {
 			const char * filename;
 			Camera * camera;
 			World * world;
-			Image * image;
 		protected:
 		public:
 			Tracer();
@@ -237,7 +240,6 @@ namespace raytracer {
 
 			World * getWorld();
 			Camera * getCamera();
-			Image * getImage();
 
 			void render(int anti_alias = 32);
 			void setOutputName(const char * filename);

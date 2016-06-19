@@ -9,9 +9,20 @@ using namespace raytracer;
 
 
 
+Plane::Plane() {
+	setPosition(Vector(0.0,0.0,0.0));
+	setOrientation(
+			Vector(1.0,0.0,0.0),
+			Vector(0.0,1.0,0.0),
+			Vector(0.0,0.0,1.0)
+		);
+	setColor(Vector(0.5,0.5,0.5));
+}
+
+
 Plane::Plane(const Vector & position, const Vector & normal) {
 	setPosition(position);
-	z_axis = normal;
+	y_axis.copy(normal);
 }
 
 
@@ -23,7 +34,7 @@ Body* Plane::clone() const {
 
 
 Vector Plane::getNormal(const Vector & p) const {
-	return z_axis;
+	return y_axis;
 }
 
 

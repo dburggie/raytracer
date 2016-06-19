@@ -19,7 +19,7 @@ BasicLight::BasicLight() {
 
 
 
-Light * BasicLight::clone() {
+Light * BasicLight::clone() const {
 	return (Light*) new BasicLight(*this);
 }
 

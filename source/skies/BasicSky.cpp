@@ -17,7 +17,7 @@ BasicSky::BasicSky() {
 
 
 
-Sky * BasicSky::clone() {
+Sky * BasicSky::clone() const {
 	return (Sky*) new BasicSky(*this);
 }
 

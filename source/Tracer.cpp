@@ -11,7 +11,6 @@ using namespace raytracer;
 Tracer::Tracer() {
 	camera = new Camera();
 	world = new World();
-	image = new Image();
 	filename = "output.png";
 }
 
@@ -20,7 +19,6 @@ Tracer::Tracer() {
 Tracer::Tracer(const Tracer & t) {
 	camera = new Camera(*t.camera);
 	world = new World(*t.world);
-	image = new Image(*t.image);
 	filename = t.filename;
 }
 
@@ -29,7 +27,6 @@ Tracer::Tracer(const Tracer & t) {
 Tracer::~Tracer() {
 	if (world)  delete world;
 	if (camera) delete camera;
-	if (image)  delete image;
 }
 
 
@@ -46,12 +43,6 @@ Camera * Tracer::getCamera() {
 
 
 
-Image * Tracer::getImage() {
-	return image;
-}
-
-
-
 void Tracer::render(int anti_alias) {
 
 	assert(anti_alias > 0);
@@ -61,6 +52,7 @@ void Tracer::render(int anti_alias) {
 
 	Ray r;
 	Vector c;
+	Image image = Image(max_x, max_y);
 
 	for (int y = 0; y < max_y; y++) {
 		for (int x = 0; x < max_x; x++) {
@@ -81,11 +73,11 @@ void Tracer::render(int anti_alias) {
 			assert(c.y < 1.0);
 			assert(c.z < 1.0);
 
-			image->setPixel(x,y,c);
+			image.setPixel(x,y,c);
 		}
 	}
 
-	image->write(filename);
+	image.write(filename);
 }
 
 

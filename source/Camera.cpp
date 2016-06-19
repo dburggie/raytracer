@@ -33,6 +33,12 @@ Camera::Camera(const Vector & position, const Vector & focus) {
 
 
 
+void Camera::setPosition(const Vector & p) {
+	position.copy(p);
+}
+
+
+
 void Camera::setBlur(double b) {
 	assert(b > DIV_LIMIT);
 
