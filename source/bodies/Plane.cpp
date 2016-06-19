@@ -42,7 +42,7 @@ Vector Plane::getNormal(const Vector & p) const {
 double Plane::getDistance(const Ray & r) const {
 
 	Vector p = r.p; p.subtract(position);
-	double speed = z_axis.dot(r.v), distance;
+	double speed = y_axis.dot(r.v), distance;
 
 	if (speed < DIV_LIMIT) {
 		return -1.0;

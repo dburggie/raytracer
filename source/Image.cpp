@@ -20,6 +20,7 @@ Image::Image() {
 
 
 Image::Image(int w, int h) {
+	scanlines = NULL;
 	setDims(w,h);
 }
 
@@ -60,7 +61,7 @@ Image::~Image() {
 void Image::setDims(int w, int h) {
 	assert(w > 0);
 	assert(h > 0);
-	
+
 	//delete old scanlines if present
 	if (scanlines) {
 		for (int y = 0; y < height; y++) {
@@ -128,13 +129,13 @@ static void setpixel(
 	assert(x >= 0);
 	assert(y >= 0);
 
-	assert(0.0 < v.x);
+	assert(0.0 <= v.x);
 	assert(v.x < 1.0);
 
-	assert(0.0 < v.y);
+	assert(0.0 <= v.y);
 	assert(v.y < 1.0);
 
-	assert(0.0 < v.z);
+	assert(0.0 <= v.z);
 	assert(v.z < 1.0);
 
 	int offset = (y * stride) + (x * 3);

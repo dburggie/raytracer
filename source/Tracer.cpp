@@ -32,12 +32,14 @@ Tracer::~Tracer() {
 
 
 World * Tracer::getWorld() {
+	assert(world != NULL);
 	return world;
 }
 
 
 
 Camera * Tracer::getCamera() {
+	assert(camera != NULL);
 	return camera;
 }
 
@@ -83,6 +85,7 @@ void Tracer::render(int anti_alias) {
 
 
 void Tracer::setOutputName(const char * filename) {
+	assert(filename != NULL);
 	if (filename) this->filename = filename;
 }
 

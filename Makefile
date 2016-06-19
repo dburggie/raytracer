@@ -5,7 +5,7 @@ BLD = build
 
 PNG = -lpng
 
-CFLG = -Wall
+CFLG = -Wall -ggdb
 CINC = -I${INC}
 COPT = ${CFLG} ${CINC}
 CC   = g++ ${COPT}

@@ -38,7 +38,7 @@ World::World(const World & w) {
 
 World::~World() {
 
-	delete sky;
+	if (sky) delete sky;
 
 	for (int i = 0; i < body_count; i++) {
 		delete bodies[i];
@@ -87,6 +87,7 @@ Vector World::sample(Ray r, int depth) {
 	double min = 1000.0, d = -1.0;
 	Body * body = NULL;
 	for (int i = 0; i < body_count; i++) {
+		assert(bodies[i] != NULL);
 		d = bodies[i]->getDistance(r);
 		if (d > DIV_LIMIT && d < min) {
 			min = d; 

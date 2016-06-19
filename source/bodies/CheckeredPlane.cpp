@@ -71,8 +71,6 @@ void CheckeredPlane::setColors(const Vector & c1, const Vector & c2) {
 
 Vector CheckeredPlane::getColor(const Vector & p) const {
 
-	assert(p.dot(y_axis) < 0.01);
-
 	if ( ((int) (std::floor(p.dot(x_axis)) + std::floor(p.dot(z_axis)))) % 2) {
 		return color;
 	}

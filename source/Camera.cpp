@@ -55,6 +55,9 @@ Ray Camera::getRay(int x, int y) const {
 		ray.p.add(Vector::random(blur));
 	}
 
+	ray.v.subtract(ray.p);
+	ray.v.normalize();
+
 	return ray;
 }
 
