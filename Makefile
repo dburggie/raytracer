@@ -135,8 +135,8 @@ ${LBLD}/BasicLight.o: ${LSRC}/BasicLight.cpp ${LHDR} ${HDR}
 TSRC = test
 TBLD = ${BLD}/tests
 TEXE = ${TBLD}/test_RNG ${TBLD}/test_Vector ${TBLD}/test_Ray
-TEXE += ${TBLD}/test_render ${TBLD}/test_Image
-TOBJ = ${TBLD}/test_RNG.o ${TBLD}/test_Vector.o
+TEXE += ${TBLD}/test_render ${TBLD}/test_Image ${TBLD}/test_refraction
+TOBJ = ${TBLD}/test_RNG.o ${TBLD}/test_Vector.o ${TBLD}/test_refraction.o
 TOBJ += ${TBLD}/test_Ray.o ${TBLD}/test_render.o ${TBLD}/test_Image.o
 
 test: ${TBLD} ${TEXE}
@@ -175,6 +175,12 @@ ${TBLD}/test_Image: ${TBLD}/test_Image.o ${BLD}/Vector.o ${BLD}/Image.o ${BLD}/R
 	${CC} -o $@ ${PNG} $^
 
 ${TBLD}/test_Image.o: ${TSRC}/test_Image.cpp ${HDR}
+	${CC} -o $@ -c $<
+
+${TBLD}/test_refraction: ${TBLD}/test_refraction.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
+	${CC} -o $@ ${PNG} $^
+
+${TBLD}/test_refraction.o: ${TSRC}/test_refraction.cpp ${HDR} ${BHDR}
 	${CC} -o $@ -c $<
 
 

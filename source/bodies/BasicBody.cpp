@@ -147,6 +147,7 @@ void BasicBody::refractionOff() {
 
 
 void BasicBody::setRefraction(double index) {
+	refracting = true;
 	setReflectivity(index);
 	index_ratio = index;
 }
