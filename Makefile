@@ -19,7 +19,7 @@ BSRC = ${SRC}/bodies
 BBLD = ${BLD}/bodies
 BHDR = ${INC}/bodies.h
 BOBJ = ${BBLD}/BasicBody.o ${BBLD}/Sphere.o ${BBLD}/Plane.o
-BOBJ += ${BBLD}/CheckeredPlane.o ${BBLD}/Cylinder.o
+BOBJ += ${BBLD}/CheckeredPlane.o ${BBLD}/Cylinder.o ${BBLD}/Glass.o
 
 SSRC = ${SRC}/skies
 SBLD = ${BLD}/skies
@@ -108,6 +108,9 @@ ${BBLD}/CheckeredPlane.o: ${BSRC}/CheckeredPlane.cpp ${BHDR} ${HDR}
 ${BBLD}/Cylinder.o: ${BSRC}/Cylinder.cpp ${BHDR} ${HDR}
 	${CC} -o $@ -c $<
 
+${BBLD}/Glass.o: ${BSRC}/Glass.cpp ${BHDR} ${HDR}
+	${CC} -o $@ -c $<
+
 
 
 
@@ -191,9 +194,9 @@ ${TBLD}/test_refraction.o: ${TSRC}/test_refraction.cpp ${HDR} ${BHDR}
 
 clean:
 	rm -f ${OBJ}
-	rm -f ${BDY}
-	rm -f ${SKY}
-	rm -f ${LGT}
+	rm -f ${BOBJ}
+	rm -f ${SOBJ}
+	rm -f ${LOBJ}
 	rm -f ${TOBJ}
 
 clobber:

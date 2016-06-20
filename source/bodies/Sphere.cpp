@@ -9,6 +9,12 @@ using namespace raytracer;
 
 
 
+Sphere::Sphere() {
+	setSize(1.0);
+}
+
+
+
 Sphere::Sphere(double radius) {
 	setSize(radius);
 }

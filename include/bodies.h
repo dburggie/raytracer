@@ -58,6 +58,7 @@ protected:
 	double magnitude;
 	double reciprocal;
 public:
+	Sphere();
 	Sphere(double radius);
 
 	virtual Body * clone() const;
@@ -67,6 +68,29 @@ public:
 	virtual Vector getNormal(const Vector & p) const;
 	virtual double getDistance(const Ray & r) const;
 }; //end Sphere declaration
+
+
+
+class GlassSphere : public Sphere {
+	protected:
+	public:
+		GlassSphere();
+		GlassSphere(double radius);
+		virtual Body * clone() const;
+}; //end GlassSphere declaration
+
+
+
+
+class GlassBubble : public Sphere {
+	public:
+		GlassBubble();
+		GlassBubble(double radius);
+		virtual Body * clone() const;
+		virtual Vector getNormal(const Vector & p) const;
+}; //end GlassBubble declaration
+
+
 
 
 
