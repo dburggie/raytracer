@@ -1,6 +1,7 @@
 
 #include <raytracer.h>
 
+#include <iostream>
 #include <cmath>
 #include <cassert>
 
@@ -45,7 +46,7 @@ Camera * Tracer::getCamera() {
 
 
 
-void Tracer::render(int anti_alias) {
+void Tracer::render(int anti_alias, int depth) {
 
 	assert(anti_alias > 0);
 
@@ -63,7 +64,7 @@ void Tracer::render(int anti_alias) {
 
 			for (int i = 0; i < anti_alias; i++) {
 				r = camera->getRay(x,y);
-				c.add(world->sample(r));
+				c.add(world->sample(r,depth));
 			}
 
 			c.scale(1.0/anti_alias);
@@ -77,6 +78,10 @@ void Tracer::render(int anti_alias) {
 
 			image.setPixel(x,y,c);
 		}
+		if ((y+1) % 25 == 0)
+			std::cerr << "raytracer::Tracer::render(): "
+				<< "finished rendering scanline " << y+1 
+				<< " of " << max_y << "\n";
 	}
 
 	image.write(filename);

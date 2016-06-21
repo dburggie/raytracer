@@ -127,6 +127,7 @@ Vector World::sample(Ray r, int depth) {
 
 		Ray refract_ray = Ray(p, r.v);
 		refract_ray.v.refract(normal,ratio);
+		refract_ray.v.normalize();
 
 		//get color along refraction ray
 		t_color = sample(refract_ray, depth-1);
@@ -144,6 +145,7 @@ Vector World::sample(Ray r, int depth) {
 	//get specular color
 	Ray reflect_ray = Ray(p, r.v);
 	reflect_ray.v.reflect(normal);
+	reflect_ray.v.normalize();
 	s_color = sample(reflect_ray, depth-1);
 	s_color.scale(s_power);
 	

@@ -241,7 +241,7 @@ namespace raytracer {
 			World * getWorld();
 			Camera * getCamera();
 
-			void render(int anti_alias = 32);
+			void render(int anti_alias = 32, int depth = 4);
 			void setOutputName(const char * filename);
 	};
 
