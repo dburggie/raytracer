@@ -73,7 +73,7 @@ void Window::init() {
 
 	pixel_size = height / y_count;
 	pixels_per_unit = 1.0 / pixel_size;
-	x_count = (int) (width * pixels_per_unit);
+	x_count = (int) std::round(width * pixels_per_unit);
 	initialized = true;
 }
 
