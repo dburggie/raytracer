@@ -3,7 +3,7 @@ SRC = source
 INC = include
 BLD = build
 
-PNG = -lxspngpp
+PNG = -lxspng
 
 CFLG = -Wall -ggdb -Llib
 CINC = -I${INC}

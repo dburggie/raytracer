@@ -5,7 +5,7 @@
 #include <cmath>
 #include <cassert>
 
-#include <xspngpp.h>
+#include <xspng.h>
 
 
 
