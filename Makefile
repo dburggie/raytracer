@@ -3,9 +3,9 @@ SRC = source
 INC = include
 BLD = build
 
-PNG = -lpng
+PNG = -lxspngpp
 
-CFLG = -Wall -ggdb
+CFLG = -Wall -ggdb -Llib
 CINC = -I${INC}
 COPT = ${CFLG} ${CINC}
 CC   = g++ ${COPT}
@@ -173,25 +173,25 @@ ${TBLD}/test_Ray.o: ${TSRC}/test_Ray.cpp ${HDR}
 	${CC} -o $@ -c $<
 
 ${TBLD}/test_render: ${TBLD}/test_render.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
-	${CC} -o $@ ${PNG} $^
+	${CC} -o $@ $^ ${PNG}
 
 ${TBLD}/test_render.o: ${TSRC}/test_render.cpp ${HDR} ${BHDR}
 	${CC} -o $@ -c $<
 
 ${TBLD}/test_Image: ${TBLD}/test_Image.o ${BLD}/Vector.o ${BLD}/Image.o ${BLD}/RNG.o
-	${CC} -o $@ ${PNG} $^
+	${CC} -o $@ $^ ${PNG}
 
 ${TBLD}/test_Image.o: ${TSRC}/test_Image.cpp ${HDR}
 	${CC} -o $@ -c $<
 
 ${TBLD}/test_refraction: ${TBLD}/test_refraction.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
-	${CC} -o $@ ${PNG} $^
+	${CC} -o $@ $^ ${PNG}
 
 ${TBLD}/test_refraction.o: ${TSRC}/test_refraction.cpp ${HDR} ${BHDR}
 	${CC} -o $@ -c $<
 
 ${TBLD}/test_glass: ${TBLD}/test_glass.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
-	${CC} -o $@ ${PNG} $^
+	${CC} -o $@ $^ ${PNG}
 
 ${TBLD}/test_glass.o: ${TSRC}/test_glass.cpp ${HDR} ${BHDR}
 	${CC} -o $@ -c $<
