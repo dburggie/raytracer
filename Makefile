@@ -140,11 +140,11 @@ TBLD = ${BLD}/tests
 
 TEXE = ${TBLD}/test_RNG ${TBLD}/test_Vector ${TBLD}/test_Ray
 TEXE += ${TBLD}/test_render ${TBLD}/test_Image ${TBLD}/test_refraction
-TEXE += ${TBLD}/test_glass
+TEXE += ${TBLD}/test_glass ${TBLD}/test_blur
 
 TOBJ = ${TBLD}/test_RNG.o ${TBLD}/test_Vector.o ${TBLD}/test_refraction.o
 TOBJ += ${TBLD}/test_Ray.o ${TBLD}/test_render.o ${TBLD}/test_Image.o
-TOBJ += ${TBLD}/test_glass.o
+TOBJ += ${TBLD}/test_glass.o ${TBLD}/test_blur.o
 
 test: ${TBLD} ${TEXE}
 
@@ -196,6 +196,12 @@ ${TBLD}/test_glass: ${TBLD}/test_glass.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ}
 ${TBLD}/test_glass.o: ${TSRC}/test_glass.cpp ${HDR} ${BHDR}
 	${CC} -o $@ -c $<
 
+${TBLD}/test_blur: ${TBLD}/test_blur.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
+	${CC} -o $@ $^ ${PNG}
+
+
+${TBLD}/test_blur.o: ${TSRC}/test_blur.cpp ${HDR} ${BHDR}
+	${CC} -o $@ -c $<
 
 
 
