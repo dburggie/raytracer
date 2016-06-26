@@ -124,7 +124,10 @@ namespace raytracer {
 			virtual double getDistance(const Ray & r) const = 0;
 			
 			//percent of light that reflects specularly at a point
-			virtual double getReflectivity(const Vector & p) const = 0;
+			virtual double getReflectivity(const Ray & incident_ray) const = 0;
+			
+			//detect whether a ray was interior to the body at intersection
+			virtual bool isInterior(const Ray & incident_ray) const = 0;
 	};
 
 

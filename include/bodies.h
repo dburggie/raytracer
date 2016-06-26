@@ -15,10 +15,10 @@ namespace raytracer {
 
 class BasicBody : public Body {
 protected:
-	bool refracting;
+	bool transparent;
 	bool matte;
 	double normal_delta;
-	double index_ratio;
+	double index;
 	double size;
 	double reflectivity;
 	Vector position, orientation, x_axis, y_axis, z_axis;
@@ -26,8 +26,6 @@ protected:
 	
 public:
 	BasicBody();
-
-	virtual Body * clone() const;
 
 	// implementing pure-virtual functions of Body
 	virtual bool isTransparent(const Vector & p) const;
@@ -39,8 +37,11 @@ public:
 	// remaining pure-virtual
 	virtual Vector getNormal(const Vector & p) const = 0;
 	virtual double getDistance(const Ray & r) const = 0;
+	virtual bool isInterior(const Ray & incident_ray) const = 0;
 
 	// new to BasicBody
+
+	virtual void useDefaults();
 	
 	//probably obvious settings
 	virtual void setPosition(const Vector & p);
@@ -90,9 +91,6 @@ public:
 
 
 class Cylinder : public Sphere {
-protected:
-	double magnitude;
-	double reciprocal;
 public:
 	Cylinder();
 
@@ -124,8 +122,11 @@ public:
 
 	virtual Body * clone() const;
 
+	virtual void setOrientation(const Vector & x, const Vector & y);
+	
 	virtual void setColor(const Vector & c);
 	virtual void setColors(const Vector & c1, const Vector & c2);
+	
 	virtual Vector getColor(const Vector & p) const;
 }; //end CheckeredPlane declaration
 
