@@ -16,39 +16,55 @@ namespace raytracer {
 class BasicBody : public Body {
 protected:
 	bool refracting;
+	bool matte;
+	double normal_delta;
 	double index_ratio;
 	double size;
-	double reflectivity; // power used in specular reflection approximation.
-	Vector position, x_axis, y_axis, z_axis, color, exterior_color;
+	double reflectivity;
+	Vector position, orientation, x_axis, y_axis, z_axis;
+	Vector color, interior_color;
+	
 public:
 	BasicBody();
 
 	virtual Body * clone() const;
 
 	// implementing pure-virtual functions of Body
-	virtual bool isRefracting() const;
-	virtual double getRefractiveRatio(const Vector & p) const;
+	virtual bool isTransparent(const Vector & p) const;
+	virtual double getIndex(const Vector & p) const;
+	virtual Vector getInteriorColor(const Vector & p) const;
 	virtual Vector getColor(const Vector & p) const;
-	virtual Vector getExteriorColor(const Vector & p) const;
-	virtual double getReflectivity(const Vector & p) const;
+	virtual double getReflectivity(const Ray & incident_ray) const;
 
 	// remaining pure-virtual
-	virtual Vector getNormal(const Vector & p) const;
-	virtual double getDistance(const Ray & r) const;
+	virtual Vector getNormal(const Vector & p) const = 0;
+	virtual double getDistance(const Ray & r) const = 0;
 
 	// new to BasicBody
+	
+	//probably obvious settings
 	virtual void setPosition(const Vector & p);
+	virtual void setOrientation(const Vector & o);
 	virtual void setOrientation(
-			const Vector & X, 
-			const Vector & Y, 
+			const Vector & X,
+			const Vector & Y,
 			const Vector & Z
 		);
-	virtual void setSize(double S); // asserts S>0?
-	virtual void setColor(const Vector & c); // don't crucify me for reusing Vector for color
-	virtual void setExteriorColor(const Vector & c);
-	virtual void setReflectivity(double index);
+	virtual void setSize(double S);
+	virtual void setInteriorColor(const Vector & c);
+	virtual void setColor(const Vector & c);
+	
+	//index of refraction also calculates a surface reflectivity
+	virtual void setIndex(double n);
+	virtual void setReflectivity(double r); // 0.0 <= r < 1.0
+	
+	//refracting surfaces are transparent
+	virtual void refractionOn();
 	virtual void refractionOff();
-	virtual void setRefraction(double index); //interior index over exterior 
+	
+	//matte surfaces have small changes to the perfect surface normal
+	virtual void matteOn(double delta);
+	virtual void matteOff();
 }; //end BasicBody declaration
 
 
@@ -57,6 +73,7 @@ class Sphere : public BasicBody {
 protected:
 	double magnitude;
 	double reciprocal;
+	bool inverted;
 public:
 	Sphere();
 	Sphere(double radius);
@@ -67,45 +84,20 @@ public:
 
 	virtual Vector getNormal(const Vector & p) const;
 	virtual double getDistance(const Ray & r) const;
+	virtual bool invert(); //changes body material to exterior and back
 }; //end Sphere declaration
 
 
 
-class GlassSphere : public Sphere {
-	protected:
-	public:
-		GlassSphere();
-		GlassSphere(double radius);
-		virtual Body * clone() const;
-}; //end GlassSphere declaration
-
-
-
-
-class GlassBubble : public Sphere {
-	public:
-		GlassBubble();
-		GlassBubble(double radius);
-		virtual Body * clone() const;
-		virtual Vector getNormal(const Vector & p) const;
-}; //end GlassBubble declaration
-
-
-
-
-
-class Cylinder : public BasicBody {
+class Cylinder : public Sphere {
 protected:
 	double magnitude;
 	double reciprocal;
 public:
 	Cylinder();
-	Cylinder(const Vector & p, const Vector & v, double radius);
 
 	virtual Body * clone() const;
 
-	virtual void setSize(double radius);
-	virtual void setOrientation(const Vector & axis);
 	virtual Vector getNormal(const Vector & p) const;
 	virtual double getDistance(const Ray & r) const;
 }; //end Cylinder declaration
@@ -115,7 +107,6 @@ public:
 class Plane : public BasicBody {
 public:
 	Plane();
-	Plane(const Vector & position, const Vector & normal);
 
 	virtual Body * clone() const;
 
@@ -130,17 +121,33 @@ protected:
 	Vector color2;
 public:
 	CheckeredPlane();
-	CheckeredPlane(const Vector & p, const Vector & n);
 
 	virtual Body * clone() const;
 
 	virtual void setColor(const Vector & c);
 	virtual void setColors(const Vector & c1, const Vector & c2);
 	virtual Vector getColor(const Vector & p) const;
-	virtual Vector getExteriorColor(const Vector & p) const;
 }; //end CheckeredPlane declaration
 
 
+
+
+class Builder {
+protected:
+	Builder();
+public:
+	static virtual void makeGlass(BasicBody * body);
+	static virtual void makeMirror(BasicBody * body);
+	
+	static Sphere * newGlassSphere();
+	static Sphere * newMirrorSphere();
+	
+	static Plane * newGlassPlane();
+	static Plane * newMirrorPlane();
+	
+	static Cylinder * newGlassCylinder();
+	static Cylinder * newMirrorCylinder();
+};
 
 } //end additions to namespace raytracer
 
