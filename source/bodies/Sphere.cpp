@@ -10,13 +10,8 @@ using namespace raytracer;
 
 
 Sphere::Sphere() {
-	setSize(1.0);
-}
-
-
-
-Sphere::Sphere(double radius) {
-	setSize(radius);
+	useDefaults();
+	inverted = false;
 }
 
 
@@ -28,7 +23,8 @@ Body * Sphere::clone() const {
 
 
 void Sphere::setSize(double radius) {
-	assert(radius > DIV_LIMIT);
+	assert(ZERO < radius);
+	
 	size = radius;
 	magnitude = radius * radius;
 	reciprocal = 1.0 / radius;
@@ -37,10 +33,26 @@ void Sphere::setSize(double radius) {
 
 
 Vector Sphere::getNormal(const Vector & p) const {
-	Vector v = p;
-	v.subtract(position);
+	Vector v;
+	
+	if (inverted) {
+		v.copy(position);
+		v.subtract(p);
+	}
+	
+	else {
+		Vector v = p;
+		v.subtract(position);
+	}
+	
 	v.scale(reciprocal);
-	assert(std::abs(v.dot() - 1.0) < DIV_LIMIT);
+	
+	if (matte) {
+		v.add(Vector::random(normal_delta);
+		v.normalize();
+	}
+	
+	assert(std::abs(v.dot() - 1.0) < ZERO);
 	return v;
 }
 
@@ -75,7 +87,7 @@ double Sphere::getDistance(const Ray & r) const {
  * (DD = 1)
  * t = (DV +/- sqrt(DV*DV + RR - VV)
  */
-	assert(std::abs(r.v.dot() - 1.0) < DIV_LIMIT);
+	assert(std::abs(r.v.dot() - 1.0) < ZERO);
 	Vector v = position;
 	v.subtract(r.p);
 
@@ -83,7 +95,7 @@ double Sphere::getDistance(const Ray & r) const {
 		   distance = v.dot(), //VV
 		   radical = angle * angle + magnitude - distance; //DV*DV+RR-VV
 
-	if (radical < DIV_LIMIT) {
+	if (radical < ZERO) {
 		return -1.0;
 	}
 
@@ -93,9 +105,9 @@ double Sphere::getDistance(const Ray & r) const {
 
 	distance = angle - radical; //DV-sqrt(DV*DV+RR-VV)
 
-	if (distance < DIV_LIMIT) {
+	if (distance < ZERO) {
 		distance = angle + radical; //DV+sqrt(DV*DV+RR-VV)
-		if (distance < DIV_LIMIT) {
+		if (distance < ZERO) {
 			return -1.0;
 		}
 
