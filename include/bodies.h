@@ -112,6 +112,15 @@ public:
 
 
 
+class GlassCylinder : public Cylinder {
+public:
+	GlassCylinder();
+	GlassCylinder(const Vector & p, const Vector & v, double radius);
+	virtual Body * clone() const;
+};
+
+
+
 class Plane : public BasicBody {
 public:
 	Plane();

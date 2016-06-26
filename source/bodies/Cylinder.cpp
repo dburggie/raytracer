@@ -54,8 +54,8 @@ double Cylinder::getDistance(const Ray  & r) const {
 	//position and direction are vectors defining position/orientation
 	Vector v = r.p, w = r.v;
 	v.subtract(position);
-	v.cross(z_axis);
-	w.cross(z_axis);
+	v = v.cross(z_axis);
+	w = w.cross(z_axis);
 	double vv = v.dot(), vw = v.dot(w), ww = w.dot();
 	double radical = vw*vw + ww / magnitude - vv*ww;
 	
@@ -78,7 +78,7 @@ double Cylinder::getDistance(const Ray  & r) const {
 
 Vector Cylinder::getNormal(const Vector & p) const {
 	Vector result = p, projection = z_axis;
-	projection.dot(p);
+	projection.scale(projection.dot(p));
 	result.subtract(projection);
 	result.scale(reciprocal);
 	return result;

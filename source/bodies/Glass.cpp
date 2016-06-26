@@ -70,3 +70,26 @@ Vector GlassBubble::getNormal(const Vector & p) const {
 
 
 
+GlassCylinder::GlassCylinder() {
+	setSize(1.0);
+	setRefraction(glass_index);
+	setColor(glass_color);
+}
+
+
+
+GlassCylinder::GlassCylinder(const Vector & p, const Vector & v, double radius) {
+	setSize(radius);
+	setRefraction(glass_index);
+	setColor(glass_color);
+	setOrientation(v);
+	setPosition(p);
+}
+
+
+
+Body * GlassCylinder::clone() const {
+	return (Body*) new GlassCylinder(*this);
+}
+
+
