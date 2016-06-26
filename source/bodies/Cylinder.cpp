@@ -9,17 +9,7 @@ using namespace raytracer;
 
 
 Cylinder::Cylinder() {
-	setSize(1.0);
-	setOrientation(Vector(0.0,1.0,0.0));
-	setPosition(Vector(0.0,0.0,0.0));
-}
-
-
-
-Cylinder::Cylinder(const Vector & p, const Vector & v, double radius) {
-	setSize(radius);
-	setOrientation(v);
-	setPosition(p);
+	useDefaults();
 }
 
 
@@ -30,42 +20,23 @@ Body * Cylinder::clone() const {
 
 
 
-void Cylinder::setSize(double radius) {
-	assert(radius > DIV_LIMIT);
-
-	size = radius;
-	magnitude = radius * radius;
-	reciprocal = 1 / radius;
-}
-
-
-
-//Cylinder uses the z_axis orientation vector from BasicBody as its axis
-void Cylinder::setOrientation(const Vector & v) {
-	x_axis.copy(1.0,0.0,0.0);
-	y_axis.copy(0.0,1.0,0.0);
-	z_axis.copy(v);
-}
-
-
-
 double Cylinder::getDistance(const Ray  & r) const {
 	//magnitude is radius squared
 	//position and direction are vectors defining position/orientation
 	Vector v = r.p, w = r.v;
 	v.subtract(position);
-	v.cross(z_axis);
-	w.cross(z_axis);
+	v.cross(orientation);
+	w.cross(orientation);
 	double vv = v.dot(), vw = v.dot(w), ww = w.dot();
 	double radical = vw*vw + ww / magnitude - vv*ww;
 	
-	if (radical < DIV_LIMIT) return -1.0;
+	if (radical < ZERO) return -1.0;
 	else radical = std::sqrt(radical) / ww;
 
 	double distance = -vw / ww - radical;
-	if (distance < DIV_LIMIT) {
+	if (distance < ZERO) {
 		distance = -vw / ww + radical;
-		if (distance < DIV_LIMIT) {
+		if (distance < ZERO) {
 			return -1.0;
 		}
 		else return distance;
@@ -77,9 +48,19 @@ double Cylinder::getDistance(const Ray  & r) const {
 
 
 Vector Cylinder::getNormal(const Vector & p) const {
-	Vector result = p, projection = z_axis;
+	Vector result = p, projection = orientation;
 	projection.dot(p);
 	result.subtract(projection);
 	result.scale(reciprocal);
+	
+	if (matte) {
+		result.add(Vector::random(normal_delta);
+		result.normalize();
+	}
+	
+	assert(std::abs(result.dot() - 1.0) < ZERO);
+	
 	return result;
 }
+
+
