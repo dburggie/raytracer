@@ -10,19 +10,7 @@ using namespace raytracer;
 
 
 Plane::Plane() {
-	setPosition(Vector(0.0,0.0,0.0));
-	setOrientation(
-			Vector(1.0,0.0,0.0),
-			Vector(0.0,1.0,0.0),
-			Vector(0.0,0.0,1.0)
-		);
-	setColor(Vector(0.5,0.5,0.5));
-}
-
-
-Plane::Plane(const Vector & position, const Vector & normal) {
-	setPosition(position);
-	y_axis.copy(normal);
+	useDefaults();
 }
 
 
@@ -34,7 +22,15 @@ Body* Plane::clone() const {
 
 
 Vector Plane::getNormal(const Vector & p) const {
-	return y_axis;
+	
+	if (matte) {
+		Vector result = orientation;
+		result.add(Vector::random(normal_delta);
+		result.normalize();
+		return result;
+	}
+	
+	return orientation;
 }
 
 
@@ -49,7 +45,7 @@ double Plane::getDistance(const Ray & r) const {
 
 	speed = p.dot(r.v);
 
-	if (speed < DIV_LIMIT) {
+	if (speed < ZERO) {
 		return -1.0;
 	}
 
