@@ -10,47 +10,36 @@ using namespace raytracer;
 
 
 
-BasicBody::BasicBody() {
-	refracting = false;
-	index_ratio = 0.01;
+void BasicBody::useDefaults() {
+	transparent = false;
+	index = 1.0;
 	reflectivity = 0.0;
+	
+	matte = false;
+	normal_delta = 0.0;
+	
 	size = 1.0;
+	
 	position.copy(0.0,0.0,0.0);
+	orientation.copy(0.0,1.0,0.0);
 	x_axis.copy(1.0,0.0,0.0);
 	y_axis.copy(0.0,1.0,0.0);
 	z_axis.copy(0.0,0.0,1.0);
-	color.copy(0.50,0.50,0.50);
-	exterior_color.copy(color);
+	
+	interior_color.copy(0.50,0.50,0.50);
+	color.copy(interior_color);
 }
 
 
 
-Body * BasicBody::clone() const {
-	return (Body*) new BasicBody(*this);
+bool BasicBody::isTransparent() const {
+	return transparent;
 }
 
 
 
-Vector BasicBody::getNormal(const Vector & p) const {
-	return Vector(0.0, 1.0, 0.0);
-}
-
-
-
-double BasicBody::getDistance(const Ray & r) const {
-	return -1.0; // no-hit
-}
-
-
-
-bool BasicBody::isRefracting() const {
-	return refracting;
-}
-
-
-
-double BasicBody::getRefractiveRatio(const Vector & p) const {
-	return index_ratio;
+double BasicBody::getIndex(const Vector & p) const {
+	return index;
 }
 
 
@@ -61,19 +50,17 @@ Vector BasicBody::getColor(const Vector & p) const {
 
 
 
-Vector BasicBody::getExteriorColor(const Vector & p) const {
-	return exterior_color;
+Vector BasicBody::getInteriorColor(const Vector & p) const {
+	return interior_color;
 }
 
 
 
-void BasicBody::setReflectivity(double index) {
-	assert(index > DIV_LIMIT);
+void BasicBody::setReflectivity(double r) {
+	assert(0 <= r);
+	assert(r < 1.0);
 
-	reflectivity = (index - 1.0) / (index);
-	reflectivity = reflectivity * reflectivity;
-	reflectivity = std::min(1.0,reflectivity);
-	reflectivity = std::max(0.0,reflectivity);
+	reflectivity = r;
 }
 
 
@@ -92,15 +79,18 @@ void BasicBody::setPosition(const Vector & p) {
 
 
 
+void BasicBody::setOrientation(const Vector & o) {
+	orientation.copy(o);
+	orientation.normalize();
+}
+
+
+
 void BasicBody::setOrientation(
 		const Vector & X, const Vector & Y, const Vector & Z ) {
 	x_axis.copy(X);
 	y_axis.copy(Y);
 	z_axis.copy(Z);
-
-	x_axis.normalize();
-	y_axis.normalize();
-	z_axis.normalize();
 }
 
 
@@ -114,45 +104,62 @@ void BasicBody::setSize(double S) {
 
 
 void BasicBody::setColor(const Vector & c) {
-	assert(c.x > 0);
-	assert(c.y > 0);
-	assert(c.z > 0);
-	assert(c.x < 1);
-	assert(c.y < 1);
-	assert(c.z < 1);
+	assert(0.0 <= c.x);
+	assert(0.0 <= c.y);
+	assert(0.0 <= c.z);
+	assert(c.x < 1.0);
+	assert(c.y < 1.0);
+	assert(c.z < 1.0);
 
 	color.copy(c);
-	exterior_color.copy(c);
+	interior_color.copy(c);
 }
 
 
 
-void BasicBody::setExteriorColor(const Vector & c) {
-	assert(c.x > 0);
-	assert(c.y > 0);
-	assert(c.z > 0);
-	assert(c.x < 1);
-	assert(c.y < 1);
-	assert(c.z < 1);
+void BasicBody::setInteriorColor(const Vector & c) {
+	assert(0.0 <= c.x);
+	assert(0.0 <= c.y);
+	assert(0.0 <= c.z);
+	assert(c.x < 1.0);
+	assert(c.y < 1.0);
+	assert(c.z < 1.0);
 
-	exterior_color.copy(c);
+	interior_color.copy(c);
 }
 
 
 void BasicBody::refractionOff() {
 	refracting = false;
-	index_ratio = 0.01;
+}
+
+void BasicBody::refractionOn()
+
+
+
+void BasicBody::setIndex(double n) {
+	assert(1.0 <= n);
+	
+	index = n;
+	reflectivity = (index - 1.0) / (index);
+	reflectivity = reflectivity * reflectivity;
+	
+	assert(0.0 <= reflectivity);
+	assert(reflectivity < 1.0);
 }
 
 
 
-void BasicBody::setRefraction(double index) {
-	refracting = true;
-	setReflectivity(index);
-	index_ratio = index;
+void BasicBody::matteOn(double delta) {
+	assert(0.0 <= delta);
+	assert(delta < 1.0);
+	
+	matte = true;
+	normal_delta = delta;
 }
 
-
-
+void BasicBody::matteOff() {
+	matte = false;
+}
 
 
