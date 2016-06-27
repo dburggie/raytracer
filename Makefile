@@ -140,21 +140,13 @@ TBLD = ${BLD}/tests
 
 TEXE  = ${TBLD}/test_RNG ${TBLD}/test_Vector ${TBLD}/test_Ray
 TEXE += ${TBLD}/test_render ${TBLD}/test_Image ${TBLD}/test_refraction
-<<<<<<< HEAD
 TEXE += ${TBLD}/test_glass ${TBLD}/test_blur ${TBLD}/test_Cylinder
-TEXE += ${TBLD}/test_GlassCylinder
-=======
-TEXE += ${TBLD}/test_blur
->>>>>>> builder
+TEXE += ${TBLD}/test_blur ${TBLD}/test_GlassCylinder
 
 TOBJ  = ${TBLD}/test_RNG.o ${TBLD}/test_Vector.o ${TBLD}/test_refraction.o
 TOBJ += ${TBLD}/test_Ray.o ${TBLD}/test_render.o ${TBLD}/test_Image.o
-<<<<<<< HEAD
 TOBJ += ${TBLD}/test_glass.o ${TBLD}/test_blur.o ${TBLD}/test_Cylinder.o
-TOBJ += ${TBLD}/test_GlassCylinder.o
-=======
-TOBJ += ${TBLD}/test_blur.o
->>>>>>> builder
+TOBJ += ${TBLD}/test_blur.o ${TBLD}/test_GlassCylinder.o
 
 test: ${TBLD} ${TEXE}
 

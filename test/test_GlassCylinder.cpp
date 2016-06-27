@@ -49,15 +49,19 @@ int main() {
 	//add a checkered plane
 	CheckeredPlane *cp = new CheckeredPlane();
 	cp->setPosition(zero);
-	cp->setOrientation(x_axis, y_axis, z_axis);
+	cp->setNormal(y_axis);
+	cp->setOrientation(x_axis,z_axis);
 	cp->setSize(1.0);
-	cp->setReflectivity(1.8);
+	cp->setIndex(1.8);
 	cp->setColors(green, red);
 	w->addBody(cp);
 	cp = NULL;
 
 	//add a Glass Cylinder
-	GlassCylinder * gc = new GlassCylinder();
+	Cylinder * gc = new Cylinder();
+	gc->setSize(1.0);
+	gc->setPosition(zero);
+	Builder::makeGlass(gc);
 	w->addBody(gc);
 	gc = NULL;
 

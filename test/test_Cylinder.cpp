@@ -50,9 +50,10 @@ int main() {
 	//add a checkered plane
 	CheckeredPlane *cp = new CheckeredPlane();
 	cp->setPosition(zero);
-	cp->setOrientation(x_axis, y_axis, z_axis);
+	cp->setNormal(y_axis);
+	cp->setOrientation(x_axis,z_axis);
 	cp->setSize(1.0);
-	cp->setReflectivity(1.8);
+	cp->setIndex(1.8);
 	cp->setColors(green, red);
 	w->addBody(cp);
 	cp = NULL;
@@ -60,6 +61,9 @@ int main() {
 	//add a Cylinder
 	Cylinder * cyl = new Cylinder();
 	cyl->setPosition(y_axis);
+	cyl->setColor(blue);
+	cyl->setSize(1.0);
+	cyl->setIndex(1.8);
 	w->addBody(cyl);
 	cyl = NULL;
 
