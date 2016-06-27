@@ -25,7 +25,7 @@ Vector Plane::getNormal(const Vector & p) const {
 	
 	if (matte) {
 		Vector result = orientation;
-		result.add(Vector::random(normal_delta);
+		result.add(Vector::random(normal_delta));
 		result.normalize();
 		return result;
 	}
@@ -52,6 +52,11 @@ double Plane::getDistance(const Ray & r) const {
 	return p.dot() / speed;
 }
 
+
+
+bool Plane::isInterior(const Ray & incident_ray) const {
+	return (incident_ray.v.dot(orientation) > 0) ? true : false;
+}
 
 
 

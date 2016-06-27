@@ -86,6 +86,7 @@ public:
 	virtual Vector getNormal(const Vector & p) const;
 	virtual double getDistance(const Ray & r) const;
 	virtual bool invert(); //changes body material to exterior and back
+	virtual bool isInterior(const Ray & incident_ray) const;
 }; //end Sphere declaration
 
 
@@ -110,6 +111,7 @@ public:
 
 	virtual Vector getNormal(const Vector & p) const;
 	virtual double getDistance(const Ray & r) const;
+	virtual bool isInterior(const Ray & incident_ray) const;
 }; //end Plane declaration
 
 

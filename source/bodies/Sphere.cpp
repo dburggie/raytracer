@@ -41,19 +41,41 @@ Vector Sphere::getNormal(const Vector & p) const {
 	}
 	
 	else {
-		Vector v = p;
+		v.copy(p);
 		v.subtract(position);
 	}
 	
 	v.scale(reciprocal);
 	
 	if (matte) {
-		v.add(Vector::random(normal_delta);
+		v.add(Vector::random(normal_delta));
 		v.normalize();
 	}
 	
 	assert(std::abs(v.dot() - 1.0) < ZERO);
 	return v;
+}
+
+
+bool Sphere::isInterior(const Ray & incident_ray) const {
+
+	//calculate normal vector
+	Vector n;
+
+	if (inverted) {
+		n.copy(position);
+		n.subtract(incident_ray.p);
+	}
+
+	else {
+		n.copy(incident_ray.p);
+		n.subtract(position);
+	}
+
+	if (incident_ray.v.dot(n) > ZERO)
+		return true;
+	else
+		return false;
 }
 
 

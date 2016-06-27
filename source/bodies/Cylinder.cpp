@@ -54,7 +54,7 @@ Vector Cylinder::getNormal(const Vector & p) const {
 	result.scale(reciprocal);
 	
 	if (matte) {
-		result.add(Vector::random(normal_delta);
+		result.add(Vector::random(normal_delta));
 		result.normalize();
 	}
 	

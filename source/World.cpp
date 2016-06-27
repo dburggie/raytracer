@@ -89,7 +89,7 @@ Vector World::sample(Ray r, int depth) {
 	for (int i = 0; i < body_count; i++) {
 		assert(bodies[i] != NULL);
 		d = bodies[i]->getDistance(r);
-		if (d > DIV_LIMIT && d < min) {
+		if (d > ZERO && d < min) {
 			min = d; 
 			body = bodies[i];
 		}
@@ -103,10 +103,11 @@ Vector World::sample(Ray r, int depth) {
 	//get point of intersection
 	Vector p = r.p;
 	p.translate(r.v, min);
+	Ray incident_ray = Ray(p,r.v);
 
 	//if we're at our maximum depth, return the object color
 	if (depth == 0) {
-		return body->getExteriorColor(p);
+		return body->getColor(p);
 	}
 
 	//we hit something, get color here and do recursion
@@ -122,11 +123,11 @@ Vector World::sample(Ray r, int depth) {
 	t_power = 1.0 - s_power;
 
 	//get transmissive color
-	if (body->isRefracting()) {
-		double ratio = body->getRefractiveRatio(p);
+	if (body->isTransparent(p)) {
+		double index = body->getIndex(p);
 
-		Ray refract_ray = Ray(p, r.v);
-		refract_ray.v.refract(normal,ratio);
+		Ray refract_ray = incident_ray;
+		refract_ray.v.refract(normal,index);
 		refract_ray.v.normalize();
 
 		//get color along refraction ray
@@ -136,14 +137,14 @@ Vector World::sample(Ray r, int depth) {
 	}
 
 	else {
-		t_color.add(body->getExteriorColor(p));
+		t_color.add(body->getColor(p));
 		t_color.scale(t_power);
 
 		//put shadow calculation here
 	}
 
 	//get specular color
-	Ray reflect_ray = Ray(p, r.v);
+	Ray reflect_ray = incident_ray;
 	reflect_ray.v.reflect(normal);
 	reflect_ray.v.normalize();
 	s_color = sample(reflect_ray, depth-1);
@@ -152,8 +153,8 @@ Vector World::sample(Ray r, int depth) {
 	t_color.add(s_color);
 
 	//absorb some light if we're inside this object
-	if (cosine > DIV_LIMIT) {
-		Vector absorb = body->getColor(p);
+	if (body->isInterior(incident_ray)) {
+		Vector absorb = body->getInteriorColor(p);
 		absorb.power(min);
 		t_color.scale(absorb);
 	}

@@ -32,7 +32,7 @@ void BasicBody::useDefaults() {
 
 
 
-bool BasicBody::isTransparent() const {
+bool BasicBody::isTransparent(const Vector & p) const {
 	return transparent;
 }
 
@@ -130,10 +130,12 @@ void BasicBody::setInteriorColor(const Vector & c) {
 
 
 void BasicBody::refractionOff() {
-	refracting = false;
+	transparent = false;
 }
 
-void BasicBody::refractionOn()
+void BasicBody::refractionOn() {
+	transparent = true;
+}
 
 
 
