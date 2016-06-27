@@ -48,7 +48,7 @@ double Plane::getDistance(const Ray & r) const {
 	Vector p = position; 
 
 	p.subtract(r.p);
-	p.project(y_axis);
+	p.project(orientation);
 
 	speed = p.dot(r.v);
 
@@ -62,7 +62,7 @@ double Plane::getDistance(const Ray & r) const {
 
 
 bool Plane::isInterior(const Ray & incident_ray) const {
-	return (incident_ray.v.dot(orientation) > 0) ? true : false;
+	return (incident_ray.v.dot(orientation) > 0.0) ? true : false;
 }
 
 

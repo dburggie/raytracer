@@ -69,6 +69,7 @@ int main() {
 	Sphere *gb = Builder::newGlassSphere();
 	gb->setSize(0.5);
 	gb->setPosition(y_axis);
+	gb->invert();
 	w->addBody(gb);
 	gb = NULL;
 

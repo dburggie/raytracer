@@ -137,7 +137,7 @@ Vector World::sample(Ray r, int depth) {
 	}
 
 	else {
-		t_color.add(body->getColor(p));
+		t_color = body->getColor(p);
 		t_color.scale(t_power);
 
 		//put shadow calculation here

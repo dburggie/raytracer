@@ -27,7 +27,6 @@ Body * CheckeredPlane::clone() const {
 
 
 void CheckeredPlane::setOrientation(const Vector & x, const Vector & y) {
-	orientation = x.cross(y);
 	x_axis.copy(x);
 	y_axis.copy(y);
 	x_axis.normalize();
