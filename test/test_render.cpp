@@ -25,6 +25,7 @@ const Vector black = Vector(0.100,0.100,0.100);
 
 
 
+const char * filename = "render.png";
 
 
 int main() {
@@ -56,22 +57,25 @@ int main() {
 	//add a checkered plane
 	CheckeredPlane *cp = new CheckeredPlane();
 	cp->setPosition(zero);
-	cp->setOrientation(x_axis, y_axis, z_axis);
+	cp->setNormal(y_axis);
+	cp->setOrientation(x_axis,z_axis);
 	cp->setSize(1.0);
-	cp->setReflectivity(1.8);
+	cp->setIndex(1.8);
 	cp->setColors(blue, white);
 	w->addBody(cp);
 	cp = NULL;
 
 	//add a sphere
-	Sphere *s = new Sphere(1.0);
+	Sphere *s = new Sphere();
 	s->setPosition(y_axis);
 	s->setColor(red);
-	s->setReflectivity(1.3);
+	s->setSize(1.0);
+	s->setIndex(1.3);
 	w->addBody(s);
 	s = NULL;
 
 	//render
+	t.setOutputName(filename);
 	t.render(4);
 
 	return 0;

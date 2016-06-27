@@ -18,6 +18,7 @@ const Vector white = Vector(0.900,0.900,0.900);
 const Vector black = Vector(0.100,0.100,0.100);
 const Vector glass = Vector(0.7,0.7,0.9);
 
+const char * filename = "refraction.png";
 
 
 int main() {
@@ -49,22 +50,23 @@ int main() {
 	//add a checkered plane
 	CheckeredPlane *cp = new CheckeredPlane();
 	cp->setPosition(zero);
-	cp->setOrientation(x_axis, y_axis, z_axis);
+	cp->setNormal(y_axis);
+	cp->setOrientation(x_axis, z_axis);
 	cp->setSize(1.0);
-	cp->setReflectivity(1.8);
+	cp->setIndex(1.8);
 	cp->setColors(green, red);
 	w->addBody(cp);
 	cp = NULL;
 
 	//add a sphere
-	Sphere *s = new Sphere(1.0);
+	Sphere *s = Builder::newGlassSphere();
 	s->setPosition(y_axis);
-	s->setColor(glass);
-	s->setRefraction(1.3);
+	s->setSize(1.0);
 	w->addBody(s);
 	s = NULL;
 
 	//render
+	t.setOutputName(filename);
 	t.render(4);
 
 	return 0;

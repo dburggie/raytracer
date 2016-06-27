@@ -50,28 +50,31 @@ int main() {
 	//add a checkered plane
 	CheckeredPlane *cp = new CheckeredPlane();
 	cp->setPosition(zero);
-	cp->setOrientation(x_axis, y_axis, z_axis);
+	cp->setNormal(y_axis);
+	cp->setOrientation(x_axis, z_axis);
 	cp->setSize(1.0);
-	cp->setReflectivity(1.8);
+	cp->setIndex(1.8);
 	cp->setColors(green, red);
 	w->addBody(cp);
 	cp = NULL;
 
 	//add a sphere
-	GlassSphere *gs = new GlassSphere();
+	Sphere *gs = Builder::newGlassSphere();
+	gs->setSize(1.0);
 	gs->setPosition(y_axis);
 	w->addBody(gs);
 	gs = NULL;
 
 	//add a bubble to the sphere
-	GlassBubble *gb = new GlassBubble();
+	Sphere *gb = Builder::newGlassSphere();
+	gb->setSize(0.5);
 	gb->setPosition(y_axis);
 	w->addBody(gb);
 	gb = NULL;
 
 	//render
 	t.setOutputName(filename);
-	t.render();
+	t.render(8,4);
 
 	return 0;
 }

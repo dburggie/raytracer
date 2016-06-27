@@ -21,6 +21,13 @@ Body* Plane::clone() const {
 
 
 
+void Plane::setNormal(const Vector & n) {
+	orientation.copy(n);
+	orientation.normalize();
+}
+
+
+
 Vector Plane::getNormal(const Vector & p) const {
 	
 	if (matte) {

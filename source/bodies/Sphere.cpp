@@ -57,6 +57,13 @@ Vector Sphere::getNormal(const Vector & p) const {
 }
 
 
+bool Sphere::invert() {
+	inverted = !inverted;
+	return inverted;
+}
+
+
+
 bool Sphere::isInterior(const Ray & incident_ray) const {
 
 	//calculate normal vector

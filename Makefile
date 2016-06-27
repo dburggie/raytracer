@@ -19,7 +19,7 @@ BSRC = ${SRC}/bodies
 BBLD = ${BLD}/bodies
 BHDR = ${INC}/bodies.h
 BOBJ = ${BBLD}/BasicBody.o ${BBLD}/Sphere.o ${BBLD}/Plane.o
-BOBJ += ${BBLD}/CheckeredPlane.o ${BBLD}/Cylinder.o 
+BOBJ += ${BBLD}/CheckeredPlane.o ${BBLD}/Cylinder.o ${BBLD}/Builder.o
 
 SSRC = ${SRC}/skies
 SBLD = ${BLD}/skies
@@ -106,6 +106,9 @@ ${BBLD}/CheckeredPlane.o: ${BSRC}/CheckeredPlane.cpp ${BHDR} ${HDR}
 	${CC} -o $@ -c $<
 
 ${BBLD}/Cylinder.o: ${BSRC}/Cylinder.cpp ${BHDR} ${HDR}
+	${CC} -o $@ -c $<
+
+${BBLD}/Builder.o: ${BSRC}/Builder.cpp ${BHDR} ${HDR}
 	${CC} -o $@ -c $<
 
 

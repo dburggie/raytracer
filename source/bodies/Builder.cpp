@@ -1,5 +1,6 @@
 
 #include <raytracer.h>
+#include <bodies.h>
 #include <cassert>
 
 
@@ -13,7 +14,7 @@ const static Vector glass_color = Vector(0.8,0.8,0.9);
 //mirror values
 const static double mirror_index = 2.5;
 const static Vector mirror_color = Vector(0.75,0.75,0.75);
-const static Vector mirror_reflectivity = 0.95;
+const static double mirror_reflectivity = 0.95;
 
 
 

@@ -109,6 +109,7 @@ public:
 
 	virtual Body * clone() const;
 
+	virtual void setNormal(const Vector & n);
 	virtual Vector getNormal(const Vector & p) const;
 	virtual double getDistance(const Ray & r) const;
 	virtual bool isInterior(const Ray & incident_ray) const;

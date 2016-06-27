@@ -10,6 +10,12 @@ using namespace raytracer;
 
 
 
+BasicBody::BasicBody() {
+	useDefaults();
+}
+
+
+
 void BasicBody::useDefaults() {
 	transparent = false;
 	index = 1.0;
