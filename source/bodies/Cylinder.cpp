@@ -48,14 +48,11 @@ double Cylinder::getDistance(const Ray  & r) const {
 
 
 Vector Cylinder::getNormal(const Vector & p) const {
-	Vector result = p, projection = orientation;
-
+	Vector result = p;
 	result.subtract(position);
-	projection.scale(projection.dot(result));
-
-	result.subtract(projection);
+	result.unproject(orientation);
 	result.scale(reciprocal);
-	
+
 	if (matte) {
 		result.add(Vector::random(normal_delta));
 		result.normalize();

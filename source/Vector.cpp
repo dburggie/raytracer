@@ -124,10 +124,10 @@ void Vector::power(double p) {
 void Vector::normalize() {
 	double l = std::sqrt(x * x + y * y + z * z);
 	
-	assert(l >= DIV_LIMIT);
+	assert(l >= ZERO);
 
 	// don't divide by what is essentially zero
-	if (l < DIV_LIMIT) {
+	if (l < ZERO) {
 		x = 0.0;
 		y = 1.0;
 		z = 0.0;
@@ -188,7 +188,7 @@ void Vector::translate(const Vector & v, double s) {
 
 void Vector::reflect(const Vector & normal) {
 
-	assert(std::abs(dot() - 1.0) < DIV_LIMIT); // should be a direction vector
+	assert(std::abs(dot() - 1.0) < ZERO); // should be a direction vector
 
 	translate(normal, -2.0 * dot(normal));
 }
@@ -200,8 +200,8 @@ void Vector::reflect(const Vector & normal) {
 //Specifically, it is the incident index divided by the resultant index.
 void Vector::refract(const Vector & normal, double index_ratio) {
 	//should be working with unit vectors
-	assert(std::abs(dot() - 1.0) < DIV_LIMIT);
-	assert(std::abs(normal.dot() - 1.0) < DIV_LIMIT);
+	assert(std::abs(dot() - 1.0) < ZERO);
+	assert(std::abs(normal.dot() - 1.0) < ZERO);
 
 	double s = dot(normal);
 	double sign = 1.0;
@@ -228,7 +228,7 @@ void Vector::refract(const Vector & normal, double index_ratio) {
 
 
 void Vector::project(const Vector & v) {
-	assert(std::abs(v.dot() - 1.0) < DIV_LIMIT);
+	assert(std::abs(v.dot() - 1.0) < ZERO);
 	double l = dot(v);
 	copy(v); scale(l);
 }
@@ -236,7 +236,7 @@ void Vector::project(const Vector & v) {
 
 
 void Vector::unproject(const Vector & v) {
-	assert(std::abs(v.dot() - 1.0) < DIV_LIMIT);
+	assert(std::abs(v.dot() - 1.0) < ZERO);
 	Vector p = v;
 	p.scale(dot(v));
 	subtract(p);
