@@ -32,7 +32,7 @@ public:
 	virtual double getIndex(const Vector & p) const;
 	virtual Vector getInteriorColor(const Vector & p) const;
 	virtual Vector getColor(const Vector & p) const;
-	virtual double getReflectivity(const Ray & incident_ray) const;
+	virtual double getReflectivity(const Vector & p) const;
 
 	// remaining pure-virtual
 	virtual Vector getNormal(const Vector & p) const = 0;
@@ -137,8 +137,8 @@ class Builder {
 protected:
 	Builder();
 public:
-	static virtual void makeGlass(BasicBody * body);
-	static virtual void makeMirror(BasicBody * body);
+	static void makeGlass(BasicBody * body);
+	static void makeMirror(BasicBody * body);
 	
 	static Sphere * newGlassSphere();
 	static Sphere * newMirrorSphere();
