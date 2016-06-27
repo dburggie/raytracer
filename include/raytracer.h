@@ -100,15 +100,34 @@ namespace raytracer {
 			Body() { }
 			virtual ~Body() { }
 
+			//return a pointer to a copy of the body
 			virtual Body * clone() const = 0;
 
-			virtual bool isRefracting() const = 0;
-			virtual double getRefractiveRatio(const Vector & p) const = 0;
+			//check whether a body is transparent at a point
+			virtual bool isTransparent(const Vector & p) const = 0;
+			
+			//get the index of refraction of a body
+			virtual double getIndex(const Vector & p) const = 0;
+			
+			//get the percentage of light absorbed by a body per unit of
+			//travel through it
+			virtual Vector getInteriorColor(const Vector & p) const = 0;
+			
+			//return surface color at a point
 			virtual Vector getColor(const Vector & p) const = 0;
-			virtual Vector getExteriorColor(const Vector & p) const = 0;
+			
+			//get a Vector perpendicular to the surface at a point
+			//must point to the exterior of the object.
 			virtual Vector getNormal(const Vector & p) const = 0;
+			
+			//find distance to the body (negative if no hit)
 			virtual double getDistance(const Ray & r) const = 0;
+			
+			//percent of light that reflects specularly at a point
 			virtual double getReflectivity(const Vector & p) const = 0;
+			
+			//detect whether a ray was interior to the body at intersection
+			virtual bool isInterior(const Ray & incident_ray) const = 0;
 	};
 
 

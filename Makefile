@@ -19,7 +19,7 @@ BSRC = ${SRC}/bodies
 BBLD = ${BLD}/bodies
 BHDR = ${INC}/bodies.h
 BOBJ = ${BBLD}/BasicBody.o ${BBLD}/Sphere.o ${BBLD}/Plane.o
-BOBJ += ${BBLD}/CheckeredPlane.o ${BBLD}/Cylinder.o ${BBLD}/Glass.o
+BOBJ += ${BBLD}/CheckeredPlane.o ${BBLD}/Cylinder.o ${BBLD}/Builder.o
 
 SSRC = ${SRC}/skies
 SBLD = ${BLD}/skies
@@ -108,7 +108,7 @@ ${BBLD}/CheckeredPlane.o: ${BSRC}/CheckeredPlane.cpp ${BHDR} ${HDR}
 ${BBLD}/Cylinder.o: ${BSRC}/Cylinder.cpp ${BHDR} ${HDR}
 	${CC} -o $@ -c $<
 
-${BBLD}/Glass.o: ${BSRC}/Glass.cpp ${BHDR} ${HDR}
+${BBLD}/Builder.o: ${BSRC}/Builder.cpp ${BHDR} ${HDR}
 	${CC} -o $@ -c $<
 
 
@@ -140,13 +140,21 @@ TBLD = ${BLD}/tests
 
 TEXE  = ${TBLD}/test_RNG ${TBLD}/test_Vector ${TBLD}/test_Ray
 TEXE += ${TBLD}/test_render ${TBLD}/test_Image ${TBLD}/test_refraction
+<<<<<<< HEAD
 TEXE += ${TBLD}/test_glass ${TBLD}/test_blur ${TBLD}/test_Cylinder
 TEXE += ${TBLD}/test_GlassCylinder
+=======
+TEXE += ${TBLD}/test_blur
+>>>>>>> builder
 
 TOBJ  = ${TBLD}/test_RNG.o ${TBLD}/test_Vector.o ${TBLD}/test_refraction.o
 TOBJ += ${TBLD}/test_Ray.o ${TBLD}/test_render.o ${TBLD}/test_Image.o
+<<<<<<< HEAD
 TOBJ += ${TBLD}/test_glass.o ${TBLD}/test_blur.o ${TBLD}/test_Cylinder.o
 TOBJ += ${TBLD}/test_GlassCylinder.o
+=======
+TOBJ += ${TBLD}/test_blur.o
+>>>>>>> builder
 
 test: ${TBLD} ${TEXE}
 
@@ -190,12 +198,6 @@ ${TBLD}/test_refraction: ${TBLD}/test_refraction.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ
 	${CC} -o $@ $^ ${PNG}
 
 ${TBLD}/test_refraction.o: ${TSRC}/test_refraction.cpp ${HDR} ${BHDR}
-	${CC} -o $@ -c $<
-
-${TBLD}/test_glass: ${TBLD}/test_glass.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
-	${CC} -o $@ $^ ${PNG}
-
-${TBLD}/test_glass.o: ${TSRC}/test_glass.cpp ${HDR} ${BHDR}
 	${CC} -o $@ -c $<
 
 ${TBLD}/test_blur: ${TBLD}/test_blur.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 

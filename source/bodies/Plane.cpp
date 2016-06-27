@@ -10,19 +10,7 @@ using namespace raytracer;
 
 
 Plane::Plane() {
-	setPosition(Vector(0.0,0.0,0.0));
-	setOrientation(
-			Vector(1.0,0.0,0.0),
-			Vector(0.0,1.0,0.0),
-			Vector(0.0,0.0,1.0)
-		);
-	setColor(Vector(0.5,0.5,0.5));
-}
-
-
-Plane::Plane(const Vector & position, const Vector & normal) {
-	setPosition(position);
-	y_axis.copy(normal);
+	useDefaults();
 }
 
 
@@ -33,8 +21,23 @@ Body* Plane::clone() const {
 
 
 
+void Plane::setNormal(const Vector & n) {
+	orientation.copy(n);
+	orientation.normalize();
+}
+
+
+
 Vector Plane::getNormal(const Vector & p) const {
-	return y_axis;
+	
+	if (matte) {
+		Vector result = orientation;
+		result.add(Vector::random(normal_delta));
+		result.normalize();
+		return result;
+	}
+	
+	return orientation;
 }
 
 
@@ -45,17 +48,22 @@ double Plane::getDistance(const Ray & r) const {
 	Vector p = position; 
 
 	p.subtract(r.p);
-	p.project(y_axis);
+	p.project(orientation);
 
 	speed = p.dot(r.v);
 
-	if (speed < DIV_LIMIT) {
+	if (speed < ZERO) {
 		return -1.0;
 	}
 
 	return p.dot() / speed;
 }
 
+
+
+bool Plane::isInterior(const Ray & incident_ray) const {
+	return (incident_ray.v.dot(orientation) > 0.0) ? true : false;
+}
 
 
 
