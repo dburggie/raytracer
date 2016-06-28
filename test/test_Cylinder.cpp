@@ -18,7 +18,7 @@ const Vector white = Vector(0.900,0.900,0.900);
 const Vector black = Vector(0.100,0.100,0.100);
 const Vector glass = Vector(0.7,0.7,0.9);
 
-const char * filename = "Cylinder.png";
+const char * filename = "cylinder.png";
 
 
 int main() {
@@ -28,16 +28,20 @@ int main() {
 	Tracer t;
 
 	Vector f = Vector(0.0,1.0,0.0),
-		   p = Vector(0.0, 3.0, 12.0),
+		   p = Vector(0.0, 4.0, 12.0),
 		   right = Vector(1.0,0.0,0.0),
-		   up = f;
+		   forward = f,
+		   up;
 
-	up.subtract(p); up.normalize();
-	up = right.cross(up); up.normalize();
+	p.scale(8.0);
+
+	forward.subtract(p); forward.normalize();
+	up = right.cross(forward); up.normalize();
+	right = forward.cross(up); right.normalize();
 
 	//set up camera
 	Camera * c = t.getCamera();
-	c->setSize(3.0,3.0);
+	c->setSize(3.0*8,3.0*8);
 	c->setFocus(f);
 	c->setPosition(p);
 	c->setOrientation(right, up);
@@ -61,6 +65,7 @@ int main() {
 	//add a Cylinder
 	Cylinder * cyl = new Cylinder();
 	cyl->setPosition(y_axis);
+	cyl->setOrientation(Vector(1.0,1.0,1.0));
 	cyl->setColor(blue);
 	cyl->setSize(1.0);
 	cyl->setIndex(1.8);

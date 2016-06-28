@@ -23,33 +23,57 @@ Body * Cylinder::clone() const {
 double Cylinder::getDistance(const Ray  & r) const {
 	//magnitude is radius squared
 	//position and direction are vectors defining position/orientation
-	Vector v = r.p, w = r.v;
-	v.subtract(position);
-	v = v.cross(orientation);
-	w = w.cross(orientation);
-	double vv = v.dot(), vw = v.dot(w), ww = w.dot();
-	double radical = vw*vw + ww / magnitude - vv*ww;
 	
-	if (radical < ZERO) return -1.0;
-	else radical = std::sqrt(radical) / ww;
+	Vector p = r.p, v = r.v;
+	p.subtract(position);
+	p.unproject(orientation);
+	v.unproject(orientation);
 
-	double distance = -vw / ww - radical;
+	assert(std::abs(p.dot(orientation)) < ZERO);
+	assert(std::abs(v.dot(orientation)) < ZERO);
+	
+	double PP = p.dot(p) - magnitude,
+		   PV = p.dot(v),
+		   VV = v.dot(v);
+	
+	double radical = PV*PV - PP*VV;
+	
+	if (radical < ZERO) {
+		return -1.0;
+	}
+
+	radical = std::sqrt(radical);
+
+	double distance = (-1.0 * PV - radical) / VV;
+
 	if (distance < ZERO) {
-		distance = -vw / ww + radical;
+		
+		distance = (-1.0 * PV + radical) / VV;
+		
 		if (distance < ZERO) {
 			return -1.0;
 		}
-		else return distance;
 	}
 
-	else return distance;
+	return distance;
 }
 
 
 
 Vector Cylinder::getNormal(const Vector & p) const {
-	Vector result = p;
-	result.subtract(position);
+	
+	Vector result;
+
+	if (inverted) {
+		result.copy(position);
+		result.subtract(p);
+	}
+
+	else {
+		result.copy(p);
+		result.subtract(position);
+	}
+
 	result.unproject(orientation);
 	result.scale(reciprocal);
 
@@ -59,6 +83,7 @@ Vector Cylinder::getNormal(const Vector & p) const {
 	}
 	
 	assert(std::abs(result.dot() - 1.0) < ZERO);
+	assert(std::abs(result.dot(orientation)) < ZERO);
 	
 	return result;
 }
