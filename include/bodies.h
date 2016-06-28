@@ -99,16 +99,9 @@ public:
 
 	virtual Vector getNormal(const Vector & p) const;
 	virtual double getDistance(const Ray & r) const;
+	virtual bool isInterior(const Ray & incident_ray) const;
 }; //end Cylinder declaration
 
-
-
-class GlassCylinder : public Cylinder {
-public:
-	GlassCylinder();
-	GlassCylinder(const Vector & p, const Vector & v, double radius);
-	virtual Body * clone() const;
-};
 
 
 

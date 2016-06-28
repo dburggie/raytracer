@@ -76,16 +76,31 @@ Vector Cylinder::getNormal(const Vector & p) const {
 
 	result.unproject(orientation);
 	result.scale(reciprocal);
+	
+	assert(std::abs(result.dot() - 1.0) < ZERO);
+	assert(std::abs(result.dot(orientation)) < ZERO);
 
 	if (matte) {
 		result.add(Vector::random(normal_delta));
 		result.normalize();
 	}
 	
-	assert(std::abs(result.dot() - 1.0) < ZERO);
-	assert(std::abs(result.dot(orientation)) < ZERO);
-	
 	return result;
 }
+
+
+
+bool Cylinder::isInterior(const Ray & incident_ray) const {
+	//get normal vector
+	Vector n = incident_ray.p;
+	n.subtract(position);
+	if (inverted) n.scale(-1.0);
+	n.unproject(orientation);
+	n.scale(reciprocal);
+	
+	if (n.dot(incident_ray) > ZERO) return true;
+	else return false;
+}
+
 
 
