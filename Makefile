@@ -138,14 +138,14 @@ ${LBLD}/BasicLight.o: ${LSRC}/BasicLight.cpp ${LHDR} ${HDR}
 TSRC = test
 TBLD = ${BLD}/tests
 
-TEXE  = ${TBLD}/test_RNG ${TBLD}/test_Vector ${TBLD}/test_Ray
-TEXE += ${TBLD}/test_render ${TBLD}/test_Image ${TBLD}/test_refraction
-TEXE += ${TBLD}/test_glass ${TBLD}/test_blur ${TBLD}/test_Cylinder
-TEXE += ${TBLD}/test_blur ${TBLD}/test_GlassCylinder
+TEXE  = ${TBLD}/rng ${TBLD}/vector ${TBLD}/ray
+TEXE += ${TBLD}/render ${TBLD}/image ${TBLD}/refraction
+TEXE += ${TBLD}/blur ${TBLD}/cylinder
+TEXE += ${TBLD}/glass_cylinder ${TBLD}/glass
 
 TOBJ  = ${TBLD}/test_RNG.o ${TBLD}/test_Vector.o ${TBLD}/test_refraction.o
 TOBJ += ${TBLD}/test_Ray.o ${TBLD}/test_render.o ${TBLD}/test_Image.o
-TOBJ += ${TBLD}/test_glass.o ${TBLD}/test_blur.o ${TBLD}/test_Cylinder.o
+TOBJ += ${TBLD}/test_blur.o ${TBLD}/test_Cylinder.o ${TBLD}/test_glass.o
 TOBJ += ${TBLD}/test_blur.o ${TBLD}/test_GlassCylinder.o
 
 test: ${TBLD} ${TEXE}
@@ -153,58 +153,64 @@ test: ${TBLD} ${TEXE}
 ${TBLD}:
 	mkdir -p $@
 
-${TBLD}/test_RNG: ${TBLD}/test_RNG.o ${BLD}/RNG.o
+${TBLD}/rng: ${TBLD}/test_RNG.o ${BLD}/RNG.o
 	g++ -o $@ $^
 	./$@
 
 ${TBLD}/test_RNG.o: ${TSRC}/test_RNG.cpp ${HDR}
 	${CC} -o $@ -c $<
 
-${TBLD}/test_Vector: ${TBLD}/test_Vector.o ${BLD}/Vector.o ${BLD}/RNG.o
+${TBLD}/vector: ${TBLD}/test_Vector.o ${BLD}/Vector.o ${BLD}/RNG.o
 	${CC} -o $@ $^
 	./$@
 
 ${TBLD}/test_Vector.o: ${TSRC}/test_Vector.cpp ${HDR}
 	${CC} -o $@ -c $<
 
-${TBLD}/test_Ray: ${TBLD}/test_Ray.o ${BLD}/Vector.o ${BLD}/Ray.o ${BLD}/RNG.o
+${TBLD}/ray: ${TBLD}/test_Ray.o ${BLD}/Vector.o ${BLD}/Ray.o ${BLD}/RNG.o
 	${CC} -o $@ $^
 	./$@
 
 ${TBLD}/test_Ray.o: ${TSRC}/test_Ray.cpp ${HDR}
 	${CC} -o $@ -c $<
 
-${TBLD}/test_render: ${TBLD}/test_render.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
+${TBLD}/render: ${TBLD}/test_render.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
 	${CC} -o $@ $^ ${PNG}
 
 ${TBLD}/test_render.o: ${TSRC}/test_render.cpp ${HDR} ${BHDR}
 	${CC} -o $@ -c $<
 
-${TBLD}/test_Image: ${TBLD}/test_Image.o ${BLD}/Vector.o ${BLD}/Image.o ${BLD}/RNG.o
+${TBLD}/image: ${TBLD}/test_Image.o ${BLD}/Vector.o ${BLD}/Image.o ${BLD}/RNG.o
 	${CC} -o $@ $^ ${PNG}
 
 ${TBLD}/test_Image.o: ${TSRC}/test_Image.cpp ${HDR}
 	${CC} -o $@ -c $<
 
-${TBLD}/test_refraction: ${TBLD}/test_refraction.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
+${TBLD}/refraction: ${TBLD}/test_refraction.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
 	${CC} -o $@ $^ ${PNG}
 
 ${TBLD}/test_refraction.o: ${TSRC}/test_refraction.cpp ${HDR} ${BHDR}
 	${CC} -o $@ -c $<
 
-${TBLD}/test_blur: ${TBLD}/test_blur.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
+${TBLD}/blur: ${TBLD}/test_blur.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
 	${CC} -o $@ $^ ${PNG}
 
 ${TBLD}/test_blur.o: ${TSRC}/test_blur.cpp ${HDR} ${BHDR}
 	${CC} -o $@ -c $<
 
-${TBLD}/test_Cylinder: ${TBLD}/test_Cylinder.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
+${TBLD}/cylinder: ${TBLD}/test_Cylinder.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ} 
 	${CC} -o $@ $^ ${PNG}
 
 ${TBLD}/test_Cylinder.o: ${TSRC}/test_Cylinder.cpp ${HDR} ${BHDR}
 	${CC} -o $@ -c $<
 
-${TBLD}/test_GlassCylinder: ${TBLD}/test_GlassCylinder.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ}
+${TBLD}/glass: ${TBLD}/test_glass.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ}
+	${CC} -o $@ $^ ${PNG}
+
+${TBLD}/test_glass.o: ${TSRC}/test_glass.cpp ${HDR} ${BHDR}
+	${CC} -o $@ -c $<
+
+${TBLD}/glass_cylinder: ${TBLD}/test_GlassCylinder.o ${OBJ} ${BOBJ} ${LOBJ} ${SOBJ}
 	${CC} -o $@ $^ ${PNG}
 
 ${TBLD}/test_GlassCylinder.o: ${TSRC}/test_GlassCylinder.cpp ${HDR} ${BHDR}
