@@ -28,12 +28,12 @@ int main() {
 	Tracer t;
 
 	Vector f = Vector(0.0,1.0,0.0),
-		   p = Vector(0.0, 4.0, 12.0),
+		   p = Vector(2.0, 4.0, 12.0),
 		   right = Vector(1.0,0.0,0.0),
 		   forward = f,
 		   up;
 
-	p.scale(8.0);
+	p.scale(4.0);
 
 	forward.subtract(p); forward.normalize();
 	up = right.cross(forward); up.normalize();
@@ -41,7 +41,7 @@ int main() {
 
 	//set up camera
 	Camera * c = t.getCamera();
-	c->setSize(3.0*8,3.0*8);
+	c->setSize(3.0*4,3.0*4);
 	c->setFocus(f);
 	c->setPosition(p);
 	c->setOrientation(right, up);

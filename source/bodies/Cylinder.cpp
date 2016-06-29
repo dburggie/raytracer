@@ -98,7 +98,7 @@ bool Cylinder::isInterior(const Ray & incident_ray) const {
 	n.unproject(orientation);
 	n.scale(reciprocal);
 	
-	if (n.dot(incident_ray) > ZERO) return true;
+	if (n.dot(incident_ray.v) > ZERO) return true;
 	else return false;
 }
 
