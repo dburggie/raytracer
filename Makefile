@@ -221,8 +221,8 @@ ${TBLD}/test_GlassCylinder.o: ${TSRC}/test_GlassCylinder.cpp ${HDR} ${BHDR}
 
 EBLD = ${BLD}/examples
 ESRC = examples
-EEXE = ${EBLD}/skew
-EOBJ = ${EBLD}/skew.o
+EEXE = ${EBLD}/skew ${EBLD}/phone
+EOBJ = ${EBLD}/skew.o ${EBLD}/phone.o
 
 examples: ${EBLD} ${EEXE}
 
@@ -234,6 +234,13 @@ ${EBLD}/skew: ${EBLD}/skew.o ${OBJ} ${BOBJ} ${SOBJ} ${LOBJ}
 
 ${EBLD}/skew.o: ${ESRC}/skew.cpp ${HDR} ${BHDR}
 	${CC} -o $@ -c $<
+
+${EBLD}/phone: ${EBLD}/phone.o ${OBJ} ${BOBJ} ${SOBJ} ${LOBJ}
+	${CC} -o $@ $^ ${PNG}
+
+${EBLD}/phone.o: ${ESRC}/phone.cpp ${HDR} ${BHDR}
+	${CC} -o $@ -c $<
+
 
 
 

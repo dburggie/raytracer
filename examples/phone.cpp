@@ -17,15 +17,16 @@ double OneWayPlane::getDistance(const Ray & ray) const {
 		return Plane::getDistance(ray);
 }
 
-static const int height_pixels = 900;
-static const double aspect_ratio = 1.6; //1440x900
+static const int height_pixels = 960;
+static const double aspect_ratio = 1.125; //1080x960
 
 static const int anti_alias = 32;
 static const int recursion_depth = 8;
 
-static const char * filename = "askew.png";
+static const char * filename = "phone.png";
 
 static Plane * newWall();
+static Cylinder * newCylinder(const Vector & pos);
 
 int main() {
 	
@@ -50,6 +51,7 @@ int main() {
 	cam->setPosition(Vector(5.0,2.5,10.0));
 	cam->setSize(window_w,window_h);
 	cam->setResolution(height_pixels);
+	cam->setBlur(0.25);
 	cam->init();
 	
 	//init ball
@@ -96,6 +98,13 @@ int main() {
 	p->setOrientation(Vector(0.0,-1.0,0.0));
 	world->addBody(p);
 	p = NULL;
+
+	//init cylinders
+	world->addBody(newCylinder(Vector(-3.0,0.0,6.0)));
+	world->addBody(newCylinder(Vector(3.0,0.0,-6.0)));
+	world->addBody(newCylinder(Vector(-6.0,0.0,3.0)));
+	world->addBody(newCylinder(Vector(6.0,0.0,-3.0)));
+
 	
 	t.setOutputName(filename);
 	t.render(anti_alias,recursion_depth);
@@ -110,3 +119,13 @@ static Plane * newWall() {
 	p->setColor(Vector(0.01,0.01,0.01));
 	return (Plane*)p;
 }
+
+static Cylinder * newCylinder(const Vector & pos) {
+	Cylinder * c = new Cylinder();
+	c->setPosition(pos);
+	c->setOrientation(Vector(0.0,1.0,0.0));
+	Builder::makeGlass(c);
+	c->setSize(0.3);
+	return c;
+}
+
