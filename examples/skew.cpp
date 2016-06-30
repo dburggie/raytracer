@@ -11,10 +11,10 @@ public:
 };
 
 double OneWayPlane::getDistance(const Ray & ray) const {
-	if (ray.v.dot(orientation) > ZERO)
+	if (ray.v.dot(this->orientation) > ZERO)
 		return -1.0;
 	else
-		return ((Plane*)this)->getDistance(ray);
+		return Plane::getDistance(ray);
 }
 
 static const int height_pixels = 900;
@@ -38,6 +38,14 @@ int main() {
 	Camera * cam = t.getCamera();
 	
 	//init cam
+	Vector forward, up, right, focus, position;
+	focus.copy(0.0,1.0,0.0);
+	position.copy(5.0,2.5,10.0);
+	forward.copy(focus); forward.subtract(position); forward.normalize();
+	right.copy(1.0,0.0,0.0);
+	up = right.cross(forward); up.normalize();
+	right = forward.cross(up); right.normalize();
+	cam->setOrientation(right,up);
 	cam->setFocus(Vector(0.0,1.0,0.0));
 	cam->setPosition(Vector(5.0,2.5,10.0));
 	cam->setSize(window_w,window_h);
