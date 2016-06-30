@@ -6,6 +6,7 @@ using namespace raytracer;
 
 class OneWayPlane : public Plane {
 public:
+	OneWayPlane() { useDefaults(); }
 	virtual double getDistance(const Ray & ray) const;
 };
 
@@ -46,7 +47,7 @@ int main() {
 	//init ball
 	Sphere * ball = new Sphere();
 	ball->setPosition(Vector(0.0,0.2,0.0));
-	ball.setSize(1.0);
+	ball->setSize(1.0);
 	ball->setColor(Vector(0.2,0.1,0.1));
 	ball->setReflectivity(0.6);
 	world->addBody(ball);

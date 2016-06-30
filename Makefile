@@ -5,7 +5,7 @@ BLD = build
 
 PNG = -lxspng
 
-CFLG = -Wall -ggdb -Llib
+CFLG = -std=c++11 -Wall -ggdb -Llib
 CINC = -I${INC}
 COPT = ${CFLG} ${CINC}
 CC   = g++ ${COPT}
@@ -214,6 +214,25 @@ ${TBLD}/glass_cylinder: ${TBLD}/test_GlassCylinder.o ${OBJ} ${BOBJ} ${LOBJ} ${SO
 	${CC} -o $@ $^ ${PNG}
 
 ${TBLD}/test_GlassCylinder.o: ${TSRC}/test_GlassCylinder.cpp ${HDR} ${BHDR}
+	${CC} -o $@ -c $<
+
+
+# ----- Examples -----
+
+EBLD = ${BLD}/examples
+ESRC = examples
+EEXE = ${EBLD}/skew
+EOBJ = ${EBLD}/skew.o
+
+examples: ${EBLD} ${EEXE}
+
+${EBLD}:
+	mkdir -p $@
+
+${EBLD}/skew: ${EBLD}/skew.o ${OBJ} ${BOBJ} ${SOBJ} ${LOBJ}
+	${CC} -o $@ $^ ${PNG}
+
+${EBLD}/skew.o: ${ESRC}/skew.cpp ${HDR} ${BHDR}
 	${CC} -o $@ -c $<
 
 
