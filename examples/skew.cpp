@@ -23,7 +23,7 @@ static const double aspect_ratio = 1.6; //1440x900
 static const int anti_alias = 32;
 static const int recursion_depth = 8;
 
-static const char * filename = "askew.png";
+static const char * filename = "skew.png";
 
 static Plane * newWall();
 
