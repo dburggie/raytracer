@@ -26,7 +26,7 @@ static const int recursion_depth = 8;
 static const char * filename = "phone.png";
 
 static Plane * newWall();
-static Cylinder * newCylinder(const Vector & pos);
+//static Cylinder * newCylinder(const Vector & pos);
 
 int main() {
 	
@@ -47,11 +47,11 @@ int main() {
 	right = forward.cross(up); right.normalize();
 	up = right.cross(forward); up.normalize();
 	cam->setOrientation(right,up);
-	cam->setFocus(Vector(0.0,1.0,0.0));
-	cam->setPosition(Vector(5.0,2.5,10.0));
+	cam->setFocus(focus);
+	cam->setPosition(position);
 	cam->setSize(window_w,window_h);
 	cam->setResolution(height_pixels);
-	cam->setBlur(0.25);
+	//cam->setBlur(0.25);
 	cam->init();
 	
 	//init ball
@@ -98,13 +98,13 @@ int main() {
 	p->setOrientation(Vector(0.0,-1.0,0.0));
 	world->addBody(p);
 	p = NULL;
-
+/*
 	//init cylinders
-	world->addBody(newCylinder(Vector(-3.0,0.0,6.0)));
-	world->addBody(newCylinder(Vector(3.0,0.0,-6.0)));
+	world->addBody(newCylinder(Vector(-3.0,0.0,-6.0)));
+	world->addBody(newCylinder(Vector(3.0,0.0,6.0)));
 	world->addBody(newCylinder(Vector(-6.0,0.0,3.0)));
 	world->addBody(newCylinder(Vector(6.0,0.0,-3.0)));
-
+ */
 	
 	t.setOutputName(filename);
 	t.render(anti_alias,recursion_depth);
@@ -119,7 +119,7 @@ static Plane * newWall() {
 	p->setColor(Vector(0.01,0.01,0.01));
 	return (Plane*)p;
 }
-
+/*
 static Cylinder * newCylinder(const Vector & pos) {
 	Cylinder * c = new Cylinder();
 	c->setPosition(pos);
@@ -128,4 +128,4 @@ static Cylinder * newCylinder(const Vector & pos) {
 	c->setSize(0.3);
 	return c;
 }
-
+ */
