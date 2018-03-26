@@ -3,9 +3,13 @@ SRC = source
 INC = include
 BLD = build
 
-PNG = -lxspng
+PNG = -Llib
+PNG += -L/usr/lib/x86_64-linux-gnu
+#PNG += -L/usr/lib
+PNG += -lxspng
+PNG += -lz
 
-CFLG = -std=c++11 -Wall -ggdb -Llib
+CFLG = -std=c++11 -Wall -ggdb
 CINC = -I${INC}
 COPT = ${CFLG} ${CINC}
 CC   = g++ ${COPT}
