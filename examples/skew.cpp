@@ -17,8 +17,13 @@ double OneWayPlane::getDistance(const Ray & ray) const {
 		return Plane::getDistance(ray);
 }
 
-static const int height_pixels = 900;
-static const double aspect_ratio = 1.6; //1440x900
+//1440x900
+//static const int height_pixels = 900;
+//static const double aspect_ratio = 1.6; //1440x900
+
+//1920x1080
+static const int height_pixels = 1080;
+static const double aspect_ratio = 1.7778;
 
 static const int anti_alias = 32;
 static const int recursion_depth = 8;
